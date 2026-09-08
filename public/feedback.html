@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 需求与反馈</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page ticket-page portal-workspace-page reference-page" data-shell="marketing" data-active="feedback">
+    <div class="page landing-shell portal-workspace-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页"><span class="brand-mark logo">AX</span><span data-product-name>AgentX</span></a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+      <main class="portal-workspace-main narrow-workspace reference-main reference-narrow">
+        <section class="workspace-title-block reveal d1"><h1>需求 · 建议 · 反馈</h1><p class="muted small mt8">功能建议、问题反馈或资料需求，都可以在这里提交。</p></section>
+        <section id="feedback" class="panel ticket-query-card reveal d1" aria-label="需求建议反馈表单"><div class="panel-head"><div><h2>提交反馈</h2><p class="sub">提交后生成 FB 编号，可在工单页查询进度。</p></div><span class="badge gray">生成 FB 编号</span></div>
+          <form id="feedback-ticket-form" class="feedback-ticket-form reference-form"><label class="field">标题<input class="input" name="title" type="text" maxlength="200" required placeholder="例如：希望增加 UDS 诊断问答入口"></label><label class="field">内容<textarea class="textarea" name="content" rows="5" maxlength="4000" required placeholder="描述你的需求、建议、Bug 现象或资料缺口。"></textarea></label>
+            <fieldset class="field segmented-field feedback-category-grid choice-grid"><legend>反馈分类</legend><label class="choice"><input type="radio" name="category" value="feature_request" checked><span>功能需求</span></label><label class="choice"><input type="radio" name="category" value="product_suggestion"><span>产品建议</span></label><label class="choice"><input type="radio" name="category" value="bug_report"><span>Bug 反馈</span></label><label class="choice"><input type="radio" name="category" value="material_request"><span>资料需求</span></label><label class="choice"><input type="radio" name="category" value="chip_qa"><span>芯片问答</span></label><label class="choice"><input type="radio" name="category" value="mcp_access"><span>MCP / 接入</span></label><label class="choice"><input type="radio" name="category" value="site_experience"><span>网站体验</span></label><label class="choice"><input type="radio" name="category" value="other"><span>其他</span></label></fieldset>
+            <label class="field">联系方式（可选）<input class="input" name="contact" type="text" autocomplete="off" placeholder="邮箱、手机号或其他可联系信息"></label><label class="choice checkbox-line"><input id="feedback-has-attachments" name="hasAttachments" type="checkbox" value="true"><span>有附件</span></label><label class="field file-drop portal-file-dropzone">附件（最多 3 个，单文件/总大小 ≤ 100MB）<span>拖拽文件到此，或点击选择 · 支持 pdf / zip / md / c / h / cpp</span><input id="feedback-attachments" name="attachments" type="file" multiple accept=".pdf,.zip,.7z,.md,.markdown,.txt,.c,.h,.cs,.cpp,.cxx,.cc,.hpp,.hh"></label><div class="flex center gap12 mt8 form-actions"><button class="btn btn-primary primary-button" type="submit">提交反馈</button><p id="feedback-ticket-status" class="status-line" aria-live="polite">提交后可在工单页追踪</p></div>
+          </form></section>
+      </main>
+      <footer class="landing-footer portal-footer"><span data-product-signature>Powered by AgentX</span><span class="fingerprint-summary" data-product-fingerprint hidden></span><div data-product-changelog></div></footer>
+    </div>
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script><script src="/assets/agentx-webui.js?v=2.2.43"></script><script src="/tickets.js?v=2.2.43"></script>
+  </body>
+</html>

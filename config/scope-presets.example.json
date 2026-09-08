@@ -1,0 +1,19 @@
+{
+  "scopePresets": [
+    {
+      "scopePresetId": "scope-preset-elmos-lighting",
+      "label": "ELMOS Lighting",
+      "visibility": "restricted",
+      "brands": ["ELMOS"],
+      "productLines": ["ELMOS Lighting"],
+      "applicationTags": ["Automotive lighting"],
+      "chipIds": [],
+      "documentIds": [],
+      "status": "pending",
+      "requiredGrants": {
+        "scopePresetIds": ["scope-preset-elmos-lighting"]
+      },
+      "sourceLabels": ["ELMOS Lighting seed scope; coverage pending"]
+    }
+  ]
+}

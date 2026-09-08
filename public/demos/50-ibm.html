@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX 50 · IBM WebUI Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="assets/demo-shell.css">
+    <style>:root{--bg:#ffffff;--surface:#f4f4f4;--border:#dfe3e6;--text:#171c1e;--muted:#5a6872;--accent:#0f62fe;--accent-text:#fff;--font:'IBM Plex Sans'}</style>
+  </head>
+  <body class="style-demo" data-mood="carbon">
+    <div class="demo-bg" aria-hidden="true"></div>
+    <div class="demo-shell">
+      <header class="demo-topbar">
+        <a class="demo-brand" href="index.html" aria-label="返回风格总览">
+          <span class="demo-brand-mark">AX</span>
+          <span>
+            <strong>AgentX</strong>
+            <small>50 · IBM / Carbon structured blue</small>
+          </span>
+        </a>
+        <nav class="demo-tabs" role="tablist" aria-label="Demo screens">
+          <button class="demo-tab active" id="tab-home" role="tab" aria-selected="true" type="button" data-screen="home">首页</button>
+          <button class="demo-tab" id="tab-login" role="tab" aria-selected="false" type="button" data-screen="login">登录</button>
+          <button class="demo-tab" id="tab-chat" role="tab" aria-selected="false" type="button" data-screen="chat">聊天</button>
+          <button class="demo-tab" id="tab-admin" role="tab" aria-selected="false" type="button" data-screen="admin">Admin</button>
+          <button class="demo-tab" id="tab-mcp" role="tab" aria-selected="false" type="button" data-screen="mcp">MCP 接入</button>
+        </nav>
+      </header>
+
+      <main class="demo-stage">
+        <section class="demo-screen active" role="tabpanel" aria-labelledby="tab-home" data-screen-panel="home" aria-label="首页预览">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">多智能体编排 · 受控知识库访问 · Remote MCP 接入</p>
+              <h1>IBM Style</h1>
+              <p class="lead">把 AgentX 放进 Carbon structured blue 的视觉语言里，快速判断最终产品 WebUI 的方向。</p>
+              <div class="action-row">
+                <button class="primary-action" type="button" data-jump="chat">进入工作台</button>
+                <button class="ghost-action" type="button" data-jump="mcp">客户 MCP 接入</button>
+                <button class="ghost-action" type="button" data-jump="login">登录预览</button>
+              </div>
+            </div>
+            <aside class="hero-orbit" aria-label="AgentX 状态概览">
+              <div class="metric-card primary-metric">
+                <span>Live sessions</span>
+                <strong>12</strong>
+                <em>3 个芯片知识库在线</em>
+              </div>
+              <div class="metric-card">
+                <span>Audit ready</span>
+                <strong>98%</strong>
+                <em>会话、密钥、问题台账可追踪</em>
+              </div>
+              <div class="metric-card">
+                <span>Remote MCP</span>
+                <strong>ON</strong>
+                <em>客户只看到授权资源</em>
+              </div>
+            </aside>
+          </div>
+          <div class="feature-grid">
+            <article><span>01</span><h3>多智能体会话</h3><p>统一 Web 和 MCP 入口，保留会话、日志和历史上下文。</p></article>
+            <article><span>02</span><h3>芯片资料问答</h3><p>围绕 chip access、角色提示词和受控知识库访问。</p></article>
+            <article><span>03</span><h3>权限和审计</h3><p>用户、MCP KEY、会话历史和问题台账集中治理。</p></article>
+            <article><span>04</span><h3>Remote MCP</h3><p>通过公开 endpoint 连接外部客户端，不暴露工作目录。</p></article>
+          </div>
+          <div class="dashboard-strip">
+            <div class="chart-card"><span>session throughput</span><i style="--h:62%"></i><i style="--h:46%"></i><i style="--h:76%"></i><i style="--h:54%"></i><i style="--h:88%"></i></div>
+            <div class="chart-card"><span>token latency</span><strong>218ms</strong><em>-14% this hour</em></div>
+            <div class="chart-card"><span>resource usage</span><strong>73%</strong><em>3 chip workspaces active</em></div>
+          </div>
+        </section>
+
+        <section class="demo-screen" hidden aria-hidden="true" role="tabpanel" aria-labelledby="tab-login" data-screen-panel="login" aria-label="登录界面预览">
+          <div class="login-preview">
+            <aside class="login-art">
+              <span class="eyebrow">Secure workspace</span>
+              <h2>让团队和客户进入各自的 AgentX 边界。</h2>
+              <p>登录后自动按角色展示工作台、Admin 或客户 MCP 指引。</p>
+              <div class="security-stack">
+                <span>JWT session</span><span>Role policy</span><span>Chip access</span>
+              </div>
+            </aside>
+            <form class="mock-form">
+              <div class="form-brand"><span class="demo-brand-mark">AX</span><strong>登录 AgentX</strong></div>
+              <label>账号<input value="demo.admin" aria-label="账号"></label>
+              <label>密码<input type="password" value="agentx-demo" aria-label="密码"></label>
+              <button class="primary-action loading-action" type="button">登录中</button>
+              <p class="form-error">模拟状态：账号或密码不正确时会在这里提示。</p>
+            </form>
+          </div>
+        </section>
+
+        <section class="demo-screen" hidden aria-hidden="true" role="tabpanel" aria-labelledby="tab-chat" data-screen-panel="chat" aria-label="聊天界面预览">
+          <div class="chat-preview">
+            <aside class="chat-sidebar">
+              <div class="section-head"><h2>会话</h2><button type="button">新会话</button></div>
+              <button class="session-row active" type="button"><strong>E521.39</strong><span>LIN 驱动调试 / running</span></button>
+              <button class="session-row" type="button"><strong>E522.95</strong><span>寄存器说明 / history</span></button>
+              <button class="session-row" type="button"><strong>Remote MCP</strong><span>客户 smoke test / done</span></button>
+              <div class="mini-panel">
+                <span>Product</span>
+                <strong>AgentX v1.6</strong>
+                <p>Powered by controlled chip workspace.</p>
+              </div>
+            </aside>
+            <section class="chat-main">
+              <div class="chat-toolbar">
+                <label>芯片 <select><option>E521.39 demo chip</option></select></label>
+                <span class="status-pill">admin / online</span>
+                <button type="button">反馈</button>
+              </div>
+              <div class="message-list">
+                <div class="message assistant"><span>已载入 E521.39 资料。你想先看通信初始化还是故障复现？</span></div>
+                <div class="message user"><span>帮我确认 autobaud 恢复流程的边界条件。</span></div>
+                <div class="message assistant streaming"><span>我会按 datasheet、现有代码路径和测试日志拆成三段检查...</span></div>
+              </div>
+              <div class="composer">
+                <textarea rows="3">输入消息，模拟发送状态...</textarea>
+                <button class="primary-action" type="button">发送</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="demo-screen" hidden aria-hidden="true" role="tabpanel" aria-labelledby="tab-admin" data-screen-panel="admin" aria-label="Admin 界面预览">
+          <div class="admin-preview">
+            <nav class="admin-nav">
+              <a class="active">用户管理</a><a>角色管理</a><a>提示词</a><a>芯片映射</a><a>会话历史</a><a>问题台账</a><a>反馈管理</a>
+            </nav>
+            <section class="admin-workbench">
+              <div class="admin-column">
+                <div class="section-head"><h2>用户</h2><button type="button">创建用户</button></div>
+                <div class="user-row active"><strong>root</strong><span>admin · active · 2 keys</span></div>
+                <div class="user-row"><strong>customer-a</strong><span>customer · E521.39 · 1 key</span></div>
+                <div class="user-row"><strong>field-team</strong><span>internal · all chips</span></div>
+              </div>
+              <div class="admin-detail">
+                <div class="detail-banner">
+                  <span>Selected user</span>
+                  <h2>root / admin</h2>
+                  <p>Sensitive credential：完整 MCP KEY 只在本地 Admin 页面显示。</p>
+                </div>
+                <div class="admin-card-grid">
+                  <article><span>Role</span><strong>admin</strong><em>可管理用户、角色、芯片和历史</em></article>
+                  <article><span>MCP KEY</span><strong>3 active</strong><em>最近生成 2026-05-25</em></article>
+                  <article><span>Chip access</span><strong>All</strong><em>继承管理员模板</em></article>
+                  <article><span>Audit</span><strong>Ready</strong><em>会话和问题台账可追踪</em></article>
+                </div>
+                <div class="table-mock">
+                  <div><strong>KEY 名称</strong><strong>状态</strong><strong>有效期</strong></div>
+                  <div><span>customer-smoke</span><span>active</span><span>2026-06-30</span></div>
+                  <div><span>opencode-demo</span><span>active</span><span>never</span></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="demo-screen" hidden aria-hidden="true" role="tabpanel" aria-labelledby="tab-mcp" data-screen-panel="mcp" aria-label="MCP 接入预览">
+          <div class="mcp-preview">
+            <div class="mcp-hero">
+              <p class="eyebrow">Remote MCP · opencode 优先 · 私有配置</p>
+              <h2>客户 MCP 接入</h2>
+              <p>服务方发放 MCP URL 和 MCP key，客户通过授权资源 id 作为 chipId 发起 smoke test。</p>
+            </div>
+            <ol class="step-list">
+              <li><strong>准备</strong><span>MCP URL + MCP key</span></li>
+              <li><strong>配置</strong><span>生成客户本地私有配置</span></li>
+              <li><strong>确认</strong><span>调用 agentx_whoami 查看资源</span></li>
+              <li><strong>烟测</strong><span>用 chipId 启动只读会话</span></li>
+            </ol>
+            <div class="template-grid">
+              <article><h3>opencode</h3><pre><code>"type": "remote",
+"url": "https://agentx.example/mcp",
+"headers": { "Authorization": "Bearer ***" }</code></pre></article>
+              <article><h3>codex</h3><pre><code>codex mcp add agentx-remote \
+  --url &lt;AGENTX_MCP_URL&gt; \
+  --bearer-token-env-var AGENTX_MCP_KEY</code></pre></article>
+              <article><h3>安全边界</h3><p>不要在聊天、截图、日志或共享文档里暴露完整 MCP KEY、JWT、cookie 或私钥。</p></article>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="assets/demo-shell.js"></script>
+  </body>
+</html>

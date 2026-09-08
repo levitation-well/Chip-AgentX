@@ -1,0 +1,7 @@
+{
+  "agentType": "claude-code",
+  "chipId": "<RESOURCE_ID_FROM_AGENTX_WHOAMI>",
+  "chatMode": "standard",
+  "task": "Read-only smoke test. Do not edit files. Use only the authorized chipId resource and reply exactly: AGENTX_MCP_OK",
+  "sessionMode": "oneshot"
+}

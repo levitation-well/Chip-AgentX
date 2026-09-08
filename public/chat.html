@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX Chat</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script>
+    <script src="/assets/i18n-portal.js?v=2.2.44"></script>
+    <script src="/assets/i18n-chat.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="chat-page landing-page portal-page portal-workspace-page">
+    <div class="app-shell chat-shell chat-hifi-shell">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航" data-i18n-aria-label="chat.nav.label">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页" data-i18n-aria-label="chat.nav.homeLabel">
+          <span class="brand-mark logo">AX</span>
+          <span data-product-name>AgentX</span>
+        </a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航" data-i18n-aria-label="chat.nav.label"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login" data-i18n="chat.action.login">登录</a></span></nav>
+        <span class="portal-locale-slot" data-agentx-locale-root></span>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+
+      <main id="chat-grid" class="chat-grid chat-hifi-grid">
+        <aside id="session-sidebar" class="session-sidebar chat-hifi-sessions" aria-label="会话列表" data-i18n-aria-label="chat.session.list">
+          <div class="section-heading chat-session-head">
+            <h1 data-i18n="chat.session.title">会话</h1>
+            <div class="sidebar-heading-actions">
+              <button id="chat-sidebar-toggle" class="sidebar-collapse-button" type="button" aria-controls="session-sidebar" aria-expanded="true" title="折叠会话列表" data-i18n-title="chat.session.sidebar.collapse">‹</button>
+              <button id="new-session" type="button" data-i18n="chat.session.new">+ 新会话</button>
+            </div>
+          </div>
+          <label class="chat-session-search" for="session-search">
+            <span class="sr-only" data-i18n="chat.session.search">搜索会话</span>
+            <input id="session-search" type="search" autocomplete="off" placeholder="搜索会话" data-i18n-placeholder="chat.session.search">
+          </label>
+          <div id="session-list" class="session-list" aria-live="polite"></div>
+          <div class="sidebar-footer-stack">
+            <div class="product-shell-panel" aria-label="产品信息" data-i18n-aria-label="chat.product.info">
+              <span data-product-signature>Powered by AgentX</span>
+              <span class="fingerprint-summary" data-product-fingerprint hidden></span>
+            </div>
+          </div>
+        </aside>
+
+        <button id="mobile-session-backdrop" class="chat-mobile-session-backdrop" type="button" aria-label="关闭会话列表" data-i18n-aria-label="chat.session.mobile.close" hidden></button>
+
+        <section class="chat-workspace chat-hifi-workspace" aria-label="对话" data-i18n-aria-label="chat.workspace.label">
+          <button id="mobile-session-toggle" class="chat-mobile-session-toggle" type="button" aria-controls="session-sidebar" aria-expanded="false" data-i18n="chat.session.mobile.open">会话</button>
+          <div id="session-meta" class="session-meta" hidden></div>
+          <div id="conversation" class="conversation" aria-live="polite"></div>
+          <div class="chat-hifi-composer-wrap">
+            <div class="composer-floatbar">
+              <div id="scope-selector" class="chat-scope-selector" aria-label="检索范围选择器" data-i18n-aria-label="chat.scope.selectorLabel">
+                <!-- 折叠态悬浮胶囊条：范围 · 内容 · 模式（发首句后由 JS 填充并显示） -->
+                <div id="scope-pillbar" class="chat-scope-pillbar" role="group" aria-label="检索范围摘要" data-i18n-aria-label="chat.scope.summaryLabel" hidden></div>
+                <!-- 展开态三步面板（语义 ① 查询范围 → ② 内容 → ③ 查询模式 → 输入框） -->
+                <div id="scope-steps" class="chat-scope-steps">
+                  <div class="chat-scope-step" data-scope-step="range">
+                    <span class="chat-scope-step-label" data-i18n="chat.scope.section.range">查询范围</span>
+                    <div id="scope-mode-options" class="chat-scope-modes" role="radiogroup" aria-label="查询范围模式" data-i18n-aria-label="chat.scope.modeLabel"></div>
+                  </div>
+                  <div class="chat-scope-step" data-scope-step="content">
+                    <span class="chat-scope-step-label" data-i18n="chat.scope.section.content">检索内容</span>
+                    <!-- 分组维度：产品线 / 品牌 / 按功能(applications)，由 chat.js renderScopeGroupPanel 动态填充 -->
+                    <div id="scope-content-panel" class="chat-scope-content" aria-live="polite"></div>
+                  </div>
+                  <div class="chat-scope-step" data-scope-step="mode">
+                    <span class="chat-scope-step-label" data-i18n="chat.mode.section">检索模式</span>
+                    <div id="chat-mode-options" class="chat-mode-options chat-hifi-modes" role="radiogroup" aria-label="会话模式" data-i18n-aria-label="chat.mode.groupLabel">
+                      <label class="chat-mode-segment"><input type="radio" name="chat-mode" value="standard" checked> <span data-i18n="chat.mode.standard">标准</span></label>
+                      <label class="chat-mode-segment"><input type="radio" name="chat-mode" value="enhanced"> <span data-i18n="chat.mode.enhanced">增强</span></label>
+                      <label class="chat-mode-segment"><input type="radio" name="chat-mode" value="multimodal"> <span data-i18n="chat.mode.multimodal">多模态</span></label>
+                    </div>
+                    <p id="chat-capability-status" class="chat-capability-status" role="status" hidden></p>
+                  </div>
+                </div>
+                <!-- 现有原生 select 保留为隐藏回退（逻辑已迁移到上方新控件） -->
+                <label class="chat-chip-pill" for="chip-select" hidden>
+                  <span data-i18n="chat.chip.current">当前芯片</span>
+                  <select id="chip-select"><option value="" data-i18n="chat.common.loading">加载中…</option></select>
+                </label>
+                <label class="chat-chip-pill chat-scope-pill" for="scope-select" hidden>
+                  <span data-i18n="chat.scope.label">检索范围</span>
+                  <select id="scope-select"><option value="" data-i18n="chat.scope.all">不限范围（单芯片）</option></select>
+                </label>
+               </div>
+             </div>
+             <form id="message-form" class="chat-composer chat-hifi-composer">
+              <label id="image-upload-control" class="chat-image-upload chat-hifi-image-upload" for="chat-image-input" title="多模态模式下，支持点击、拖入或粘贴图片" data-i18n-title="chat.image.addHint" hidden>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span class="sr-only" data-i18n="chat.image.add">添加图片</span>
+                <input id="chat-image-input" name="images" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple disabled>
+              </label>
+              <label class="sr-only" for="message" data-i18n="chat.message.label">消息</label>
+              <textarea id="message" rows="2" maxlength="2000" placeholder="输入芯片型号、寄存器名称或工程问题…" data-i18n-placeholder="chat.message.placeholder"></textarea>
+              <button id="send-message" class="primary-button chat-hifi-send" type="submit" aria-label="发送" data-i18n-aria-label="chat.action.send">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="6 11 12 5 18 11"></polyline>
+                </svg>
+              </button>
+              <button id="stop-message" class="secondary-button chat-hifi-stop" type="button" aria-label="停止" title="停止当前请求" data-i18n-aria-label="chat.action.stop" data-i18n-title="chat.action.stopHint" hidden>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
+                  <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+                </svg>
+              </button>
+              <p id="chat-error" class="error-line" role="alert"></p>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+<script src="/auth.js?v=2.2.42"></script>
+<script src="/ui-kit.js?v=2.2.43"></script>
+<script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/chat.js?v=2.2.44"></script>
+    <script src="/assets/agentx-webui.js?v=2.2.43"></script>
+  </body>
+</html>

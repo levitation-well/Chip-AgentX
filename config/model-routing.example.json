@@ -1,0 +1,8 @@
+{
+  "allowedRoles": ["opus", "sonnet", "haiku", "fable"],
+  "modeRoleMapping": {
+    "standard": "haiku",
+    "enhanced": "sonnet",
+    "multimodal": "opus"
+  }
+}

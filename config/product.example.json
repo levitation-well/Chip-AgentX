@@ -1,0 +1,28 @@
+{
+  "edition": "public",
+  "landingMode": "always",
+  "branding": {
+    "enabled": true,
+    "productName": "AgentX",
+    "signature": "Powered by AgentX",
+    "tooltip": "AgentX",
+    "homepageUrl": "/",
+    "githubUrl": "https://github.com/your-org/agentx",
+    "docsUrl": "/"
+  },
+  "fingerprint": {
+    "enabled": true,
+    "level": "light",
+    "owner": "AgentX",
+    "deploymentId": "agentx-public",
+    "channel": "web",
+    "publicKeyId": "agentx-local"
+  },
+  "donation": {
+    "enabled": true,
+    "alipayQrUrl": "/assets/donation/alipay.example.png",
+    "wechatQrUrl": "/assets/donation/wechat.example.png",
+    "alipayLink": "/donation/alipay",
+    "wechatLink": "/donation/wechat"
+  }
+}

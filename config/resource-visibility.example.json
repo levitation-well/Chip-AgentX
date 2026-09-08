@@ -1,0 +1,18 @@
+{
+  "documents": [
+    {
+      "documentId": "doc-e52295-datasheet",
+      "label": "E522.95 Datasheet",
+      "visibility": "restricted",
+      "brands": ["ELMOS"],
+      "productLines": ["Lighting"],
+      "applicationTags": ["Automotive lighting"],
+      "chipIds": ["E522.95"],
+      "status": "approved",
+      "requiredGrants": {
+        "documentIds": ["doc-e52295-datasheet"]
+      },
+      "sourceLabels": ["E522.95 datasheet"]
+    }
+  ]
+}

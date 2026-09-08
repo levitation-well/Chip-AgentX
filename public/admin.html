@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX Admin</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script>
+    <script src="/assets/i18n-portal.js?v=2.2.44"></script>
+    <script src="/assets/i18n-admin.js?v=2.2.44"></script>
+    <script>
+      document.documentElement.dataset.adminTheme = 'light';
+    </script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="admin-page" data-admin-theme="light">
+    <div class="app-shell admin-shell" data-admin-theme="light">
+      <header class="topbar admin-topbar">
+        <div class="brand">AgentX Admin</div>
+        <div class="topbar-meta">
+          <span class="admin-env-pill" data-product-version><span data-i18n="product.env.local">本地</span></span>
+          <a class="admin-return-link" href="/home" data-i18n="admin.topbar.return">返回门户</a>
+          <span class="admin-page-tabs admin-locale-slot" data-agentx-locale-root></span>
+          <span class="portal-auth-slot" data-portal-auth></span>
+        </div>
+      </header>
+
+      <main id="admin-login-shell" class="admin-login-shell">
+        <section class="login-panel">
+          <div class="login-brand">
+            <div class="brand-mark">AX</div>
+            <div>
+              <h1 data-i18n="admin.login.title">管理员登录</h1>
+              <p data-i18n="admin.login.hint">使用同一账号密码登录，且账号必须具备 admin 角色。</p>
+            </div>
+          </div>
+          <p id="admin-no-permission" class="error-line" role="alert"></p>
+          <form id="admin-login-form" class="stack-form">
+            <label for="admin-username" data-i18n="admin.login.username">账号</label>
+            <input id="admin-username" name="username" type="text" autocomplete="username">
+            <label for="admin-password" data-i18n="admin.login.password">密码</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password">
+            <button class="primary-button" type="submit" data-i18n="admin.login.submit">进入 Admin</button>
+          </form>
+        </section>
+      </main>
+
+      <main id="admin-operation-surface" hidden class="admin-grid">
+        <nav id="admin-section-nav" class="admin-section-nav" aria-label="Admin sections" data-admin-control>
+          <button id="admin-sidebar-toggle" class="sidebar-collapse-button" type="button" aria-controls="admin-section-nav" aria-expanded="true" title="折叠侧边栏" data-i18n-title="admin.nav.collapse">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.nav.collapse">折叠侧栏</span>
+          </button>
+          <div class="admin-nav-group" data-nav-group="user-access" data-expanded="true">
+            <button class="admin-nav-group-toggle" type="button" aria-expanded="true" aria-controls="admin-nav-group-user-access-items">
+              <span class="admin-nav-group-title" data-i18n="admin.group.userAccess">用户与访问</span>
+              <span class="admin-nav-group-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="admin-nav-group-user-access-items" class="admin-nav-group-items">
+              <a id="section-users" href="/admin/sections/users" data-section="users" aria-current="page">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.1"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 5.4a3 3 0 0 1 0 5.6"/><path d="M17.4 14.3c2 .6 3.4 2.3 3.4 4.7"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.users">用户</span>
+          </a>
+              <a id="section-roles" href="/admin/sections/roles" data-section="roles">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/><circle cx="12" cy="10" r="1.7"/><path d="M9 15c0-1.6 1.3-2.6 3-2.6s3 1 3 2.6"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.roles">角色模板</span>
+          </a>
+            </div>
+          </div>
+          <div class="admin-nav-group" data-nav-group="knowledge" data-expanded="true">
+            <button class="admin-nav-group-toggle" type="button" aria-expanded="true" aria-controls="admin-nav-group-knowledge-items">
+              <span class="admin-nav-group-title" data-i18n="admin.group.knowledge">知识库</span>
+              <span class="admin-nav-group-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="admin-nav-group-knowledge-items" class="admin-nav-group-items">
+              <a id="section-chips" href="/admin/sections/chips" data-section="chips">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 4v3M14 4v3M10 17v3M14 17v3M4 10h3M4 14h3M17 10h3M17 14h3"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.chips">芯片目录</span>
+          </a>
+              <a id="section-resources" href="/admin/sections/resources" data-section="resources">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h9l5 5v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M14 5v5h5"/><path d="M8 13h7M8 16h5"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.resources">文档与 Scope</span>
+          </a>
+              <a id="section-prompts" href="/admin/sections/prompts" data-section="prompts">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 5h15v9.5h-9L6 18.5V14.5H4.5z"/><path d="M8 8.8h8M8 11.4h5"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.prompts">提示词</span>
+          </a>
+            </div>
+          </div>
+          <div class="admin-nav-group" data-nav-group="operations" data-expanded="true">
+            <button class="admin-nav-group-toggle" type="button" aria-expanded="true" aria-controls="admin-nav-group-operations-items">
+              <span class="admin-nav-group-title" data-i18n="admin.group.operations">运营记录</span>
+              <span class="admin-nav-group-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="admin-nav-group-operations-items" class="admin-nav-group-items">
+              <a id="section-sessions" href="/admin/sections/sessions" data-section="sessions">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 12a8.4 8.4 0 1 1 2.6 6.1"/><path d="M3.6 18.2v-4h4"/><path d="M12 8v4.2l3 1.8"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.sessions">会话历史</span>
+          </a>
+              <a id="section-observability" href="/admin/sections/observability" data-section="observability">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13.5" width="3" height="4.5"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.observability">成本观测</span>
+          </a>
+            </div>
+          </div>
+          <div class="admin-nav-group" data-nav-group="content-support" data-expanded="true">
+            <button class="admin-nav-group-toggle" type="button" aria-expanded="true" aria-controls="admin-nav-group-content-support-items">
+              <span class="admin-nav-group-title" data-i18n="admin.group.contentSupport">内容与支持</span>
+              <span class="admin-nav-group-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="admin-nav-group-content-support-items" class="admin-nav-group-items">
+              <a id="section-announcements" href="/admin/sections/announcements" data-section="announcements">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9.5 16 5.2v13.6L5 14.5z"/><path d="M5 9.5H4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h1"/><path d="M19 9.2a3 3 0 0 1 0 5.6"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.announcements">公告维护</span>
+          </a>
+              <a id="section-feedback" href="/admin/sections/feedback" data-section="feedback">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 1.8 1.8 0 0 0 0 3.6V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2.4A1.8 1.8 0 0 0 4 10z"/><path d="M14 6.4v11.2"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.feedback">反馈&工单</span>
+          </a>
+            </div>
+          </div>
+          <div class="admin-nav-group" data-nav-group="system-settings" data-expanded="true">
+            <button class="admin-nav-group-toggle" type="button" aria-expanded="true" aria-controls="admin-nav-group-system-settings-items">
+              <span class="admin-nav-group-title" data-i18n="admin.group.systemSettings">系统设置</span>
+              <span class="admin-nav-group-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="admin-nav-group-system-settings-items" class="admin-nav-group-items">
+              <a id="section-model-routing" href="/admin/sections/model-routing" data-section="model-routing">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h5l2 3h9"/><path d="M4 17h5l2-3h9"/><path d="M15 7l3-3 3 3-3 3z"/><path d="M15 17l3-3 3 3-3 3z"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.modelRouting">模式与模型档位</span>
+          </a>
+              <a id="section-discovery-traces" href="/admin/sections/discovery-traces" data-section="discovery-traces">
+            <span class="admin-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/><path d="M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+            <span class="admin-nav-text" data-i18n="admin.section.discoveryTraces">运行诊断</span>
+          </a>
+            </div>
+          </div>
+          <div class="admin-nav-footer">
+            <div class="admin-nav-footer-divider" aria-hidden="true"></div>
+            <div class="admin-nav-footer-version" data-admin-nav-version data-product-version><span data-i18n="product.env.local">本地</span></div>
+          </div>
+        </nav>
+
+        <div class="admin-workspace-shell">
+          <nav id="admin-breadcrumb" class="admin-breadcrumb" aria-label="Admin breadcrumb"></nav>
+          <div id="admin-page-tabs" class="admin-page-tabs" role="tablist" aria-label="子视图切换" data-i18n-aria-label="admin.aria.subviews" data-admin-control></div>
+          <div class="admin-workspace">
+          <section id="panel-users" class="admin-section users-section" aria-label="用户管理" data-i18n-aria-label="admin.users.panelAria" data-admin-control>
+            <div class="admin-users admin-master-detail">
+              <section class="panel user-list-panel user-master-panel admin-master-col">
+                <h1 class="user-list-title full-only">用户</h1>
+                <div class="user-toolbar full-only"></div>
+                <form id="user-filter-form" class="user-filter-bar admin-filterbar full-only">
+                  <div class="admin-filterbar-search">
+                    <svg class="admin-filterbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input id="user-search" type="search" placeholder="搜索用户名 / 邮箱 / 公司" autocomplete="off" aria-label="搜索用户" data-i18n-aria-label="admin.users.searchAria">
+                  </div>
+                  <label class="sr-only" for="user-filter-role">角色</label>
+                  <select id="user-filter-role" name="role">
+                    <option value="">全部角色</option>
+                    <option value="admin">admin</option>
+                    <option value="internal">internal</option>
+                    <option value="partner">partner</option>
+                    <option value="customer">customer</option>
+                    <option value="public">public</option>
+                  </select>
+                  <label class="sr-only" for="user-filter-status">状态</label>
+                  <select id="user-filter-status" name="status">
+                    <option value="">全部状态</option>
+                    <option value="active">active</option>
+                    <option value="disabled">disabled</option>
+                  </select>
+                  <label class="sr-only" for="user-filter-expired">过期</label>
+                  <select id="user-filter-expired" name="expired">
+                    <option value="">全部有效期</option>
+                    <option value="expired">已过期</option>
+                    <option value="valid">未过期</option>
+                  </select>
+                  <label class="sr-only" for="user-filter-company">公司/组织</label>
+                  <input id="user-filter-company" name="company" type="text" placeholder="公司/组织">
+                  <div class="admin-filterbar-spacer"></div>
+                  <button id="user-create-open" class="primary-button btn-sm" type="button">+ 创建用户</button>
+                  <button id="user-filter-reset" class="secondary-button btn-sm" type="button">重置</button>
+                </form>
+                <div class="user-rail-head rail-head">
+                  <span class="t">用户</span>
+                  <button id="user-detail-close" class="secondary-button admin-rail-back" type="button">全部</button>
+                </div>
+                <div class="admin-dense-table full-only">
+                  <table class="user-table" aria-label="用户列表" data-i18n-aria-label="admin.users.listAria">
+                    <thead>
+                      <tr><th>用户名</th><th>角色</th><th>状态</th><th>积分余额</th><th>芯片访问摘要</th><th>MCP Key</th><th>有效期</th><th>公司</th></tr>
+                    </thead>
+                    <tbody id="user-list" aria-live="polite"></tbody>
+                  </table>
+                </div>
+                <div id="user-rail" class="rail-list user-rail-list" role="listbox" aria-label="用户列表" data-i18n-aria-label="admin.users.listAria" aria-live="polite"></div>
+              </section>
+              <div id="user-create-modal" class="agentx-modal-backdrop" hidden>
+                <div class="agentx-modal" role="dialog" aria-modal="true" aria-labelledby="user-create-title">
+                  <h3 id="user-create-title">创建用户</h3>
+                  <form id="user-form" class="stack-form" data-admin-control>
+                    <label for="new-username">账号</label>
+                    <input id="new-username" name="username" type="text" autocomplete="off">
+                    <label for="new-password">密码</label>
+                    <input id="new-password" name="password" type="password" autocomplete="new-password">
+                    <label for="new-role">角色</label>
+                    <select id="new-role" name="role">
+                      <option value="customer" selected>customer</option>
+                      <option value="partner">partner</option>
+                      <option value="internal">internal</option>
+                      <option value="admin">admin</option>
+                      <option value="public">public</option>
+                    </select>
+                    <label for="new-status">状态</label>
+                    <select id="new-status" name="status">
+                      <option value="active" selected>active</option>
+                      <option value="disabled">disabled</option>
+                    </select>
+                    <label for="new-expires-at">用户有效期</label>
+                    <input id="new-expires-at" name="expiresAt" type="datetime-local">
+                    <label for="new-company">公司/组织</label>
+                    <input id="new-company" name="company" type="text" autocomplete="organization">
+                    <label for="new-real-name">真实姓名</label>
+                    <input id="new-real-name" name="realName" type="text" autocomplete="name">
+                    <label for="new-email">邮箱</label>
+                    <input id="new-email" name="email" type="email" autocomplete="email">
+                    <label for="new-note">备注</label>
+                    <input id="new-note" name="note" type="text">
+                    <div class="agentx-modal-actions">
+                      <button id="user-create-cancel" class="secondary-button" type="button">取消</button>
+                      <button class="primary-button" type="submit">创建用户</button>
+                    </div>
+                    <p id="user-create-error" class="error-line" role="alert"></p>
+                  </form>
+                </div>
+              </div>
+
+              <section class="admin-user-context user-detail-panel admin-detail-col" aria-label="用户上下文管理" data-i18n-aria-label="admin.users.contextAria" data-admin-control>
+              <div class="panel detail-head">
+                <div>
+                  <h2 id="selected-user-title">选择用户</h2>
+                  <div id="selected-user-meta" class="selected-user-meta"></div>
+                  <div id="selected-user-badges" class="user-status-badges"></div>
+                </div>
+                <p id="admin-error" class="error-line" role="alert"></p>
+                <div class="admin-user-tabs" role="tablist" aria-label="用户详情分区" data-i18n-aria-label="admin.users.detailTabsAria">
+                  <button id="user-tab-profile" type="button" role="tab" aria-selected="true" aria-controls="user-tabpanel-profile" data-user-tab="profile">资料</button>
+                  <button id="user-tab-access" type="button" role="tab" aria-selected="false" aria-controls="user-tabpanel-access" data-user-tab="access">访问权限</button>
+                  <button id="user-tab-credits" type="button" role="tab" aria-selected="false" aria-controls="user-tabpanel-credits" data-user-tab="credits">积分</button>
+                  <button id="user-tab-keys" type="button" role="tab" aria-selected="false" aria-controls="user-tabpanel-keys" data-user-tab="keys">MCP Key</button>
+                  <button id="user-tab-danger" type="button" role="tab" aria-selected="false" aria-controls="user-tabpanel-danger" data-user-tab="danger">危险操作</button>
+                </div>
+                <div id="user-tabpanel-profile" class="admin-user-tabpanel" role="tabpanel" aria-labelledby="user-tab-profile">
+                  <form id="selected-user-role-form" class="inline-form" data-admin-control>
+                    <label for="selected-user-role">角色</label>
+                    <select id="selected-user-role" name="role">
+                      <option value="customer">customer</option>
+                      <option value="partner">partner</option>
+                      <option value="internal">internal</option>
+                      <option value="admin">admin</option>
+                      <option value="public">public</option>
+                    </select>
+                    <button id="selected-user-role-save" class="primary-button" type="submit">保存角色</button>
+                  </form>
+                  <form id="selected-user-profile-form" class="profile-form" data-admin-control>
+                    <label for="selected-user-status">状态</label>
+                    <select id="selected-user-status" name="status">
+                      <option value="active">active</option>
+                      <option value="disabled">disabled</option>
+                    </select>
+                    <label for="selected-user-expires-at">用户有效期</label>
+                    <input id="selected-user-expires-at" name="expiresAt" type="datetime-local">
+                    <label for="selected-user-company">公司/组织</label>
+                    <input id="selected-user-company" name="company" type="text" autocomplete="organization">
+                    <label for="selected-user-real-name">真实姓名</label>
+                    <input id="selected-user-real-name" name="realName" type="text" autocomplete="name">
+                    <label for="selected-user-email">邮箱</label>
+                    <input id="selected-user-email" name="email" type="email" autocomplete="email">
+                    <label for="selected-user-note">备注</label>
+                    <input id="selected-user-note" name="note" type="text">
+                    <div class="form-actions user-profile-actions">
+                      <button id="selected-user-profile-save" class="primary-button" type="submit">保存资料</button>
+                      <button id="selected-user-profile-reset" class="secondary-button" type="button">重置</button>
+                    </div>
+                  </form>
+                </div>
+                <div id="user-tabpanel-access" class="admin-user-tabpanel" role="tabpanel" aria-labelledby="user-tab-access" hidden>
+                  <div id="selected-user-access-summary" class="admin-access-summary" aria-live="polite"></div>
+                  <div id="selected-user-access-editor" class="admin-access-editor"></div>
+                  <div class="inline-form admin-access-actions">
+                    <button id="selected-user-access-save" class="primary-button" type="button">保存访问权限</button>
+                    <span id="selected-user-access-dirty" class="muted" hidden>有未保存的变更</span>
+                  </div>
+                  <p id="selected-user-access-status" class="success-line" role="status" hidden></p>
+                  <p id="selected-user-access-error" class="error-line" role="alert"></p>
+                </div>
+                <div id="user-tabpanel-credits" class="admin-user-tabpanel" role="tabpanel" aria-labelledby="user-tab-credits" hidden>
+                  <div class="user-credit-detail">
+                    <h3 class="detail-subhead">积分</h3>
+                    <div id="selected-user-credit-balance" class="user-status-badges" aria-live="polite"></div>
+                    <form id="selected-user-credit-form" class="profile-form" data-admin-control>
+                      <div class="inline-form" role="group" aria-label="积分调整模式" data-i18n-aria-label="admin.credits.adjustModeAria">
+                        <button id="selected-user-credit-mode-delta" class="secondary-button" type="button" aria-pressed="true">delta</button>
+                        <button id="selected-user-credit-mode-balance" class="secondary-button" type="button" aria-pressed="false">目标余额</button>
+                      </div>
+                      <span></span>
+                      <label for="selected-user-credit-amount">数量</label>
+                      <input id="selected-user-credit-amount" name="amount" type="number" step="1" inputmode="numeric" placeholder="输入 delta 变动数量">
+                      <label for="selected-user-credit-reason">原因</label>
+                      <input id="selected-user-credit-reason" name="reason" type="text" autocomplete="off" required>
+                      <label for="selected-user-credit-note">备注（可选）</label>
+                      <input id="selected-user-credit-note" name="note" type="text" autocomplete="off">
+                      <button id="selected-user-credit-submit" class="primary-button" type="submit">提交调整</button>
+                    </form>
+                    <p id="selected-user-credit-status" class="error-line" role="alert"></p>
+                    <div class="admin-user-tabpanel">
+                      <h3>最近积分流水</h3>
+                      <div id="selected-user-credit-ledger" class="credits-ledger" aria-live="polite"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="user-tabpanel-keys" class="admin-user-tabpanel" role="tabpanel" aria-labelledby="user-tab-keys" hidden>
+                  <p class="key-sensitive-warning">Sensitive credential / 敏感凭据：完整 MCP Key 仅在本机 Admin 页面显示，请只复制到受信任环境。</p>
+                  <div class="key-management">
+                    <h3 class="detail-subhead">MCP Key</h3>
+                    <form id="key-form" class="inline-form" data-admin-control>
+                      <label class="sr-only" for="key-name">Key 名称</label>
+                      <input id="key-name" name="name" type="text" placeholder="Key 名称">
+                      <label class="sr-only" for="key-expires-at">Key 有效期</label>
+                      <input id="key-expires-at" name="expiresAt" type="datetime-local" aria-label="Key 有效期">
+                      <button class="primary-button" type="submit">生成 Key</button>
+                    </form>
+                    <div id="generated-key" class="generated-key" aria-live="polite"></div>
+                    <div id="key-list" class="key-list"></div>
+                  </div>
+                </div>
+                <div id="user-tabpanel-danger" class="admin-user-tabpanel" role="tabpanel" aria-labelledby="user-tab-danger" hidden>
+                  <div class="user-admin-actions" data-admin-control>
+                    <form id="selected-user-password-form" class="inline-form">
+                      <label class="sr-only" for="selected-user-password">新密码</label>
+                      <input id="selected-user-password" name="password" type="password" autocomplete="new-password" placeholder="新密码">
+                      <button id="selected-user-password-save" class="secondary-button" type="submit">重置密码</button>
+                    </form>
+                    <button id="selected-user-delete" class="danger-button" type="button">删除用户</button>
+                  </div>
+                </div>
+              </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="panel-roles" class="admin-section role-admin-detail" aria-label="角色模板" data-admin-control hidden>
+            <div class="role-split-pane">
+              <div class="panel role-list-pane">
+                <div class="role-list-header">
+                  <h2>角色模板</h2>
+                  <button id="role-add" class="secondary-button" type="button">+ 新增模板</button>
+                </div>
+                <div id="role-list" class="role-list" aria-live="polite"></div>
+              </div>
+              <div class="panel role-editor-pane">
+                <div id="role-editor-placeholder" class="role-placeholder">
+                  <div class="role-placeholder-inner">
+                    <h3>选择角色模板进行编辑</h3>
+                    <p>角色模板复用用户访问权限的授权编辑组件，修改后同角色用户会继承默认值。</p>
+                  </div>
+                </div>
+                <div id="role-editor-form" class="role-editor-form" hidden>
+                  <div class="role-editor-header">
+                    <div>
+                      <h3 id="role-editor-title">编辑角色模板</h3>
+                      <p>编辑此模板的默认授权；用户详情页仍可按用户覆盖。</p>
+                    </div>
+                    <div class="inline-form role-editor-actions">
+                      <button id="role-save" class="primary-button" type="button">保存模板</button>
+                      <button id="role-cancel" class="secondary-button" type="button">取消</button>
+                    </div>
+                  </div>
+                  <form id="role-form" class="stack-form">
+                    <div class="role-core-grid">
+                      <label for="role-name">角色名称</label>
+                      <input id="role-name" name="name" type="text" autocomplete="off">
+                      <label for="role-description">描述</label>
+                      <input id="role-description" name="description" type="text">
+                      <label for="role-injection-policy">提示词注入策略</label>
+                      <select id="role-injection-policy" name="injectionPolicy">
+                        <option value="first_turn">first_turn</option>
+                        <option value="every_turn">every_turn</option>
+                      </select>
+                    </div>
+                    <fieldset class="role-workbench-section">
+                      <legend>默认芯片访问</legend>
+                      <div class="role-access-mode" role="radiogroup" aria-label="默认芯片访问模式" data-i18n-aria-label="admin.roles.defaultChipAccessModeAria">
+                        <label><input type="radio" name="role-chip-access-mode" value="all"> 全部芯片</label>
+                        <label><input type="radio" name="role-chip-access-mode" value="selected"> 指定芯片</label>
+                        <label><input type="radio" name="role-chip-access-mode" value="none"> 无芯片</label>
+                      </div>
+                      <div id="role-chip-access-list" class="role-chip-access-list"></div>
+                    </fieldset>
+                    <fieldset class="role-workbench-section">
+                      <legend>默认授权策略</legend>
+                      <div id="role-access-editor" class="admin-access-editor"></div>
+                    </fieldset>
+                    <fieldset class="role-workbench-section">
+                      <legend>后台内部权限（仅 admin 有效）</legend>
+                      <div id="role-permission-list" class="role-permission-list"></div>
+                    </fieldset>
+                    <p id="role-error" class="error-line" role="alert"></p>
+                    <p id="role-success" class="success-line" role="status" hidden></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="panel-model-routing" class="admin-section admin-detail" aria-label="模式与模型档位" data-admin-control hidden>
+            <div class="panel detail-head admin-model-routing-panel">
+              <div class="admin-model-routing-head">
+                <div>
+                  <h2>模式与模型档位</h2>
+                  <p class="muted">配置查询模式到 Claude role 的薄映射；provider、密钥和真实模型由后端模型网关管理。</p>
+                </div>
+              </div>
+              <form id="model-routing-form" class="admin-model-routing-form">
+                <div class="admin-mode-routing-grid">
+                  <section class="admin-mode-card" data-mode-card="standard" aria-labelledby="model-routing-standard-title">
+                    <div class="admin-mode-card-head">
+                      <span class="admin-mode-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>
+                      </span>
+                      <div>
+                        <h3 id="model-routing-standard-title">标准模式</h3>
+                        <p>日常问答场景，响应速度优先，适合大多数 datasheet 查询问题。</p>
+                      </div>
+                    </div>
+                    <label for="model-routing-standard">模型档位</label>
+                    <select id="model-routing-standard" name="standard"></select>
+                    <div class="admin-mode-card-multiplier"><span>积分倍率</span><strong id="model-routing-standard-multiplier" data-mode-multiplier="standard">×1.0</strong></div>
+                  </section>
+                  <section class="admin-mode-card" data-mode-card="enhanced" aria-labelledby="model-routing-enhanced-title">
+                    <div class="admin-mode-card-head">
+                      <span class="admin-mode-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+                      </span>
+                      <div>
+                        <h3 id="model-routing-enhanced-title">增强模式</h3>
+                        <p>更强推理能力，适合跨文档、多轮追问或复杂寄存器配置类问题。</p>
+                      </div>
+                    </div>
+                    <label for="model-routing-enhanced">模型档位</label>
+                    <select id="model-routing-enhanced" name="enhanced"></select>
+                    <div class="admin-mode-card-multiplier"><span>积分倍率</span><strong id="model-routing-enhanced-multiplier" data-mode-multiplier="enhanced">×—</strong></div>
+                  </section>
+                  <section class="admin-mode-card" data-mode-card="multimodal" aria-labelledby="model-routing-multimodal-title">
+                    <div class="admin-mode-card-head">
+                      <span class="admin-mode-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+                      </span>
+                      <div>
+                        <h3 id="model-routing-multimodal-title">多模态模式</h3>
+                        <p>支持读取 datasheet 内的电路图 / 引脚图，适合涉及图片内容的问题。</p>
+                      </div>
+                    </div>
+                    <label for="model-routing-multimodal">模型档位</label>
+                    <select id="model-routing-multimodal" name="multimodal"></select>
+                    <div class="admin-mode-card-multiplier"><span>积分倍率</span><strong id="model-routing-multimodal-multiplier" data-mode-multiplier="multimodal">×—</strong></div>
+                  </section>
+                </div>
+                <div class="inline-form admin-model-routing-actions">
+                  <button id="model-routing-save" class="primary-button" type="submit">保存路由</button>
+                  <button id="model-routing-reload" class="secondary-button" type="button">重新加载</button>
+                </div>
+                <p id="model-routing-error" class="error-line" role="alert"></p>
+                <p id="model-routing-success" class="success-line" role="status" hidden></p>
+              </form>
+            </div>
+          </section>
+
+          <section id="panel-chips" class="admin-chip-panel admin-section admin-detail" aria-label="芯片目录映射" data-i18n-aria-label="admin.chips.panelAria" data-admin-control hidden>
+            <div class="panel detail-head">
+              <div class="admin-panel-heading-row">
+                <h2>芯片目录</h2>
+                <div class="admin-panel-heading-actions">
+                  <button id="chip-add" class="primary-button btn-sm" type="button">+ 新建芯片</button>
+                  <button id="chip-save" class="secondary-button btn-sm" type="button">保存芯片配置</button>
+                </div>
+              </div>
+              <div id="chip-restart-notice" class="status-line restart-notice" hidden></div>
+              <form id="chip-filter-form" class="admin-filterbar" onsubmit="return false">
+                <div class="admin-filterbar-search">
+                  <svg class="admin-filterbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                  <label class="sr-only" for="chip-filter-search">搜索芯片 ID / Label</label>
+                  <input id="chip-filter-search" type="search" autocomplete="off" placeholder="搜索芯片 ID / Label">
+                </div>
+                <label class="sr-only" for="chip-filter-line">产品线</label>
+                <select id="chip-filter-line">
+                  <option value="">全部产品线</option>
+                </select>
+                <div class="admin-filterbar-spacer"></div>
+              </form>
+              <div class="admin-dense-table">
+                <table id="chip-catalog-table" class="user-table" aria-label="芯片目录密集表" data-i18n-aria-label="admin.chips.tableAria">
+                  <thead>
+                    <tr>
+                      <th>Chip ID</th>
+                      <th>Label</th>
+                      <th>品牌</th>
+                      <th>产品线</th>
+                      <th>应用标签</th>
+                      <th>文档数</th>
+                      <th>提示词</th>
+                      <th>工作区路径</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="chip-catalog-list" aria-live="polite"></tbody>
+                </table>
+              </div>
+              <p id="chip-mapping-error" class="error-line" role="alert"></p>
+              <p class="admin-muted-note chip-future-module-note">外部资料提交的审核入库流程为未来模块；当前提交的资料请在 反馈&工单 中下载后按数据孵化 SOP 人工入库。</p>
+            </div>
+            <div id="chip-editor-backdrop" class="admin-drawer-backdrop" hidden></div>
+            <aside id="chip-editor-drawer" class="admin-drawer" role="dialog" aria-modal="true" aria-labelledby="chip-editor-title" hidden>
+              <form id="chip-editor-form">
+                <div class="admin-drawer-header">
+                  <div>
+                    <h3 id="chip-editor-title">编辑芯片</h3>
+                    <p id="chip-editor-meta" class="selected-user-meta"></p>
+                  </div>
+                  <button id="chip-editor-close" class="admin-drawer-close" type="button" aria-label="关闭">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <div class="admin-tabs" role="tablist" aria-label="芯片编辑分区" data-i18n-aria-label="admin.chips.editorTabsAria">
+                  <button id="chip-editor-tab-basic" type="button" role="tab" aria-selected="true" aria-controls="chip-editor-tabpanel-basic" data-chip-editor-tab="basic" class="active">基础信息</button>
+                  <button id="chip-editor-tab-group" type="button" role="tab" aria-selected="false" aria-controls="chip-editor-tabpanel-group" data-chip-editor-tab="group">归组</button>
+                  <button id="chip-editor-tab-docs" type="button" role="tab" aria-selected="false" aria-controls="chip-editor-tabpanel-docs" data-chip-editor-tab="docs">关联文档</button>
+                  <button id="chip-editor-tab-workspace" type="button" role="tab" aria-selected="false" aria-controls="chip-editor-tabpanel-workspace" data-chip-editor-tab="workspace">工作区路径</button>
+                  <button id="chip-editor-tab-danger" type="button" role="tab" aria-selected="false" aria-controls="chip-editor-tabpanel-danger" data-chip-editor-tab="danger" class="danger">危险操作</button>
+                </div>
+                <div class="admin-drawer-body">
+                  <div id="chip-editor-tabpanel-basic" class="admin-drawer-tabpanel" data-chip-editor-tabpanel="basic">
+                    <label for="chip-editor-id">Chip ID</label>
+                    <input id="chip-editor-id" data-field="id" autocomplete="off">
+                    <label for="chip-editor-label">Label</label>
+                    <input id="chip-editor-label" data-field="label" autocomplete="off">
+                    <label for="chip-editor-summary">说明</label>
+                    <textarea id="chip-editor-summary" data-field="summary" rows="2"></textarea>
+                    <label for="chip-editor-query-hint">Query hint</label>
+                    <input id="chip-editor-query-hint" data-field="queryHint" autocomplete="off">
+                  </div>
+                  <div id="chip-editor-tabpanel-group" class="admin-drawer-tabpanel" data-chip-editor-tabpanel="group" hidden>
+                    <p class="admin-form-hint">归组组件与「文档与 Scope」资源治理共用同一 taxonomy 组件：品牌 + 产品线 + 应用标签。</p>
+                    <div class="taxonomy-block">
+                      <div class="tx-row">
+                        <label for="chip-editor-brand">品牌</label>
+                        <div id="chip-editor-brand" class="admin-token-picker" data-field="brand" data-token-field="brand"></div>
+                      </div>
+                      <div class="tx-row">
+                        <label for="chip-editor-product-lines">产品线</label>
+                        <div id="chip-editor-product-lines" class="admin-token-picker" data-field="productLines" data-token-field="productLines"></div>
+                      </div>
+                      <div class="tx-row">
+                        <label for="chip-editor-application-tags">应用标签</label>
+                        <div id="chip-editor-application-tags" class="admin-token-picker" data-field="applicationTags" data-token-field="applicationTags"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="chip-editor-tabpanel-docs" class="admin-drawer-tabpanel" data-chip-editor-tabpanel="docs" hidden>
+                    <label for="chip-editor-document-ids">关联文档</label>
+                    <div id="chip-editor-document-ids" class="chip-document-list" aria-live="polite"></div>
+                  </div>
+                  <div id="chip-editor-tabpanel-workspace" class="admin-drawer-tabpanel" data-chip-editor-tabpanel="workspace" hidden>
+                    <label for="chip-editor-workspace-dir">工作区路径</label>
+                    <input id="chip-editor-workspace-dir" data-field="workspaceDir" autocomplete="off">
+                    <span id="chip-editor-workspace-status" class="admin-badge admin-badge-muted"></span>
+                  </div>
+                  <div id="chip-editor-tabpanel-danger" class="admin-drawer-tabpanel" data-chip-editor-tabpanel="danger" hidden>
+                    <div class="confirm-box">
+                      <h4>删除芯片</h4>
+                      <p class="admin-form-hint">删除后该芯片将从目录移除，且不可恢复。若仍被用户授权引用，删除会被拦截；被文档或 Scope Preset 引用的绑定不会自动清理，删除后需到「文档与 Scope」用孤儿校验手动核对。</p>
+                      <button id="chip-editor-delete" class="danger-button" type="button">删除</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-drawer-footer">
+                  <button id="chip-editor-apply" class="primary-button" type="submit">应用到目录</button>
+                </div>
+              </form>
+            </aside>
+          </section>
+
+          <section id="panel-sessions" class="admin-section history-workspace" aria-label="会话历史" data-admin-control hidden>
+            <div class="history-main">
+              <div class="panel history-toolbar">
+                <div class="history-toolbar-head">
+                  <h2>会话历史</h2>
+                  <div id="history-summary" class="history-summary" aria-live="polite"></div>
+                </div>
+                <form id="history-filter-form" class="history-filter-form admin-filterbar">
+                  <div class="admin-filterbar-search">
+                    <svg class="admin-filterbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <label class="sr-only" for="history-filter-user">用户</label>
+                    <input id="history-filter-user" name="username" type="text" autocomplete="off" placeholder="用户名 / userId" data-i18n-placeholder="admin.history.userFilterPlaceholder">
+                  </div>
+                  <label class="sr-only" for="history-filter-role">角色</label>
+                  <input id="history-filter-role" name="role" type="text" autocomplete="off" placeholder="角色">
+                  <label class="sr-only" for="history-filter-chip">芯片</label>
+                  <input id="history-filter-chip" name="chipId" type="text" autocomplete="off" placeholder="芯片">
+                  <div class="admin-filterbar-search">
+                    <svg class="admin-filterbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <label class="sr-only" for="history-filter-keyword">关键词</label>
+                    <input id="history-filter-keyword" name="keyword" type="text" autocomplete="off" placeholder="关键词">
+                  </div>
+                  <label class="sr-only" for="history-filter-from">开始日期</label>
+                  <input id="history-filter-from" name="from" type="date">
+                  <span class="admin-filterbar-date-sep">至</span>
+                  <label class="sr-only" for="history-filter-to">结束日期</label>
+                  <input id="history-filter-to" name="to" type="date">
+                  <div class="admin-filterbar-spacer"></div>
+                  <button class="primary-button btn-sm" type="submit">筛选</button>
+                  <button id="history-filter-reset" class="secondary-button btn-sm" type="button">重置</button>
+                </form>
+                <div class="history-tabs admin-page-tabs" role="tablist" aria-label="历史浏览方式" data-i18n-aria-label="admin.history.tabsAria">
+                  <button id="history-tab-users" type="button" role="tab" data-history-tab="users" aria-controls="history-pane-users">按用户</button>
+                  <button id="history-tab-latest" type="button" role="tab" data-history-tab="latest" aria-controls="history-pane-latest">最新 Chat</button>
+                  <button id="history-tab-questions" type="button" role="tab" data-history-tab="questions" aria-controls="history-pane-questions">问题台账</button>
+                </div>
+              </div>
+
+              <div id="history-error" class="error-line" role="alert"></div>
+              <section id="history-pane-users" class="history-pane" role="tabpanel" aria-labelledby="history-tab-users">
+                <div class="admin-dense-table">
+                  <table id="history-sessions-table-users" class="user-table" aria-label="会话历史密集表 · 按用户" data-i18n-aria-label="admin.history.sessionsByUserTableAria">
+                    <thead>
+                      <tr><th>用户</th><th>角色</th><th>芯片</th><th>类型</th><th>模型</th><th>积分消耗</th><th>时长</th><th>状态</th><th>更新时间</th><th>sessionId</th></tr>
+                    </thead>
+                    <tbody id="history-sessions-list-users" aria-live="polite"></tbody>
+                  </table>
+                </div>
+              </section>
+              <section id="history-pane-latest" class="history-pane" role="tabpanel" aria-labelledby="history-tab-latest" hidden>
+                <div class="admin-dense-table">
+                  <table id="history-sessions-table-latest" class="user-table" aria-label="会话历史密集表 · 最新 Chat" data-i18n-aria-label="admin.history.latestChatsTableAria">
+                    <thead>
+                      <tr><th>用户</th><th>角色</th><th>芯片</th><th>类型</th><th>模型</th><th>积分消耗</th><th>时长</th><th>状态</th><th>更新时间</th><th>sessionId</th></tr>
+                    </thead>
+                    <tbody id="history-sessions-list-latest" aria-live="polite"></tbody>
+                  </table>
+                </div>
+              </section>
+              <section id="history-pane-questions" class="history-pane" role="tabpanel" aria-labelledby="history-tab-questions" hidden>
+                <div class="admin-dense-table">
+                  <table id="history-questions-table" class="user-table" aria-label="问题台账密集表" data-i18n-aria-label="admin.history.questionsTableAria">
+                    <thead>
+                      <tr><th>时间</th><th>问题</th><th>用户</th><th>芯片</th><th>模型</th><th>积分消耗</th></tr>
+                    </thead>
+                    <tbody id="history-questions-list" aria-live="polite"></tbody>
+                  </table>
+                </div>
+              </section>
+              <div class="history-pagination">
+                <button id="history-load-more-sessions" class="secondary-button" type="button">加载更多会话</button>
+                <button id="history-load-more-questions" class="secondary-button" type="button" hidden>加载更多问题</button>
+              </div>
+            </div>
+
+            <div id="session-detail-backdrop" class="admin-drawer-backdrop" hidden></div>
+            <aside id="session-detail-drawer" class="admin-drawer session-detail-drawer" role="dialog" aria-modal="true" aria-labelledby="session-detail-title" hidden>
+              <div class="admin-drawer-header">
+                <div>
+                  <h3 id="session-detail-title">会话详情</h3>
+                  <div id="session-detail-meta" class="session-detail-meta selected-user-meta"></div>
+                </div>
+                <button id="session-detail-close" class="admin-drawer-close" type="button" aria-label="关闭">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="admin-drawer-body">
+                <div id="session-detail-error" class="error-line" role="alert"></div>
+                <section class="session-detail-section">
+                  <h3>会话转录</h3>
+                  <div id="session-detail-transcript" class="session-detail-transcript"></div>
+                </section>
+                <section id="session-detail-analysis" class="session-detail-section session-analysis-section">
+                  <h3>会话分析</h3>
+                  <p id="session-detail-analysis-error" class="error-line" role="alert"></p>
+                  <div id="session-detail-analysis-bubbles" class="session-analysis-bubbles" aria-live="polite"></div>
+                </section>
+                <section class="session-detail-section">
+                  <h3>会话信息</h3>
+                  <div id="session-detail-info" class="session-detail-info"></div>
+                </section>
+                <section class="session-detail-section debug-section">
+                  <button id="session-debug-toggle" class="debug-toggle" type="button" aria-expanded="false">Debug 排障信息</button>
+                  <div id="session-detail-debug" class="session-detail-debug" hidden></div>
+                </section>
+              </div>
+            </aside>
+          </section>
+
+          <section id="panel-observability" class="admin-section admin-detail observability-workspace" aria-label="成本观测" data-admin-control hidden>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>成本观测</h2>
+                  <p>调用量、模型分布、积分、估算 token、入口、用户、MCP Key、耗时与失败率。</p>
+                </div>
+                <div class="observability-toolbar">
+                  <label for="observability-range">时间范围</label>
+                  <select id="observability-range" name="range">
+                    <option value="24h">最近 24 小时</option>
+                    <option value="7d" selected>最近 7 天</option>
+                    <option value="30d">最近 30 天</option>
+                  </select>
+                  <button id="observability-refresh" class="secondary-button" type="button">刷新</button>
+                </div>
+              </div>
+              <p id="observability-error" class="error-line" role="alert"></p>
+              <div id="observability-summary" class="observability-summary" aria-live="polite"></div>
+              <div class="observability-grid">
+                <section>
+                  <h3>按入口分布</h3>
+                  <div id="observability-entry" class="observability-list"></div>
+                </section>
+                <section>
+                  <h3>按模型分布</h3>
+                  <div id="observability-model" class="observability-list"></div>
+                </section>
+                <section>
+                  <h3>按用户分布</h3>
+                  <div id="observability-user" class="observability-list"></div>
+                </section>
+                <section>
+                  <h3>按 MCP Key 分布</h3>
+                  <div id="observability-mcp-key" class="observability-list"></div>
+                </section>
+              </div>
+              <section class="observability-anomalies">
+                <h3>异常列表</h3>
+                <div id="observability-anomalies" class="observability-list"></div>
+              </section>
+            </section>
+          </section>
+
+          <section id="panel-discovery-traces" class="admin-section admin-detail" aria-label="运行诊断" data-admin-control hidden>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>运行诊断 / Discovery Trace</h2>
+                  <p>每次 Claude Code 会话加固启动（cc.launch）与非零退出（error）的结构化追踪记录，供调试排障使用。</p>
+                </div>
+                <div class="admin-filterbar diagnostics-filterbar" aria-label="运行诊断快捷筛选" data-i18n-aria-label="admin.diagnostics.quickFiltersAria">
+                  <button id="discovery-traces-filter-all" class="secondary-button active" type="button" data-discovery-filter="">全部</button>
+                  <button id="discovery-traces-filter-error" class="secondary-button" type="button" data-discovery-filter="error">失败</button>
+                  <button id="discovery-traces-refresh" class="secondary-button" type="button">刷新</button>
+                </div>
+              </div>
+              <div class="diagnostics-system-cards">
+                <section id="diagnostics-system-info" class="diagnostics-system-card" aria-label="系统信息">
+                  <div class="diagnostics-system-card-head">
+                    <h3>系统信息</h3>
+                    <p class="muted">当前展示运行诊断接口返回的系统快照；逐会话完整取证见会话历史 Debug 抽屉。</p>
+                  </div>
+                  <dl class="diagnostics-system-grid">
+                    <div>
+                      <dt>版本</dt>
+                      <dd id="diagnostics-version-value">读取中</dd>
+                    </div>
+                    <div>
+                      <dt>数据目录</dt>
+                      <dd id="diagnostics-data-dir-value">待接入</dd>
+                    </div>
+                    <div>
+                      <dt>平台</dt>
+                      <dd id="diagnostics-platform-value">待接入</dd>
+                    </div>
+                    <div>
+                      <dt>Node.js</dt>
+                      <dd id="diagnostics-node-version-value">待接入</dd>
+                    </div>
+                    <div>
+                      <dt>Agent 后端</dt>
+                      <dd id="diagnostics-agent-backend-value">待接入</dd>
+                    </div>
+                    <div>
+                      <dt>Claude Code CLI</dt>
+                      <dd id="diagnostics-claude-version-value">待接入</dd>
+                    </div>
+                  </dl>
+                </section>
+                <section id="diagnostics-config-status-info" class="diagnostics-system-card" aria-label="配置文件加载状态" data-i18n-aria-label="admin.diagnostics.configStatusAria">
+                  <div class="diagnostics-system-card-head">
+                    <h3>配置文件加载状态（含资源目录接线）</h3>
+                    <p class="muted">按模块列出加载状态；异常项标红以便快速定位。</p>
+                  </div>
+                  <div id="diagnostics-config-status-list" class="diagnostics-config-status-list"></div>
+                </section>
+              </div>
+              <p id="discovery-traces-error" class="error-line" role="alert"></p>
+              <div id="discovery-traces-summary" class="section-heading" aria-live="polite"></div>
+              <div id="discovery-traces-list" class="discovery-traces-list" aria-live="polite"></div>
+            </section>
+          </section>
+
+          <section id="panel-announcements" class="admin-section announcements-admin-workspace" aria-label="公告维护" data-admin-control hidden>
+            <section class="panel announcements-admin-panel">
+              <div class="history-toolbar-head">
+                <div>
+                  <h2 data-i18n="admin.announcements.title">公告维护</h2>
+                  <p data-i18n="admin.announcements.description">维护 announcement、news、release note、changelog 的草稿、发布、下线和聚合阅读状态。</p>
+                </div>
+              </div>
+              <p id="announcement-admin-error" class="error-line" role="alert"></p>
+              <div class="announcements-admin-grid">
+                <section class="announcement-admin-list-col" aria-label="公告列表" data-i18n-aria-label="admin.announcements.listAria">
+                  <form id="announcement-admin-filter-form" class="announcement-admin-toolbar">
+                    <label>
+                      类型
+                      <select id="announcement-admin-filter-type" name="type">
+                        <option value="">全部类型</option>
+                        <option value="announcement">announcement</option>
+                        <option value="news">news</option>
+                        <option value="release_note">release_note</option>
+                        <option value="changelog">changelog</option>
+                      </select>
+                    </label>
+                    <label>
+                      状态
+                      <select id="announcement-admin-filter-status" name="status">
+                        <option value="">全部状态</option>
+                        <option value="draft">draft</option>
+                        <option value="published">published</option>
+                        <option value="offline">offline</option>
+                        <option value="archived">archived</option>
+                      </select>
+                    </label>
+                    <label>
+                      置顶
+                      <select id="announcement-admin-filter-pinned" name="pinned">
+                        <option value="">全部置顶</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                      </select>
+                    </label>
+                    <button id="announcement-admin-new" class="primary-button" type="button" data-i18n="admin.announcements.new">新建草稿</button>
+                    <details class="announcement-admin-more-filters">
+                      <summary>更多筛选</summary>
+                      <label>
+                        可见性
+                        <select id="announcement-admin-filter-visibility" name="visibility">
+                          <option value="">全部可见性</option>
+                          <option value="public">public</option>
+                          <option value="customer">customer</option>
+                          <option value="partner">partner</option>
+                          <option value="internal">internal</option>
+                          <option value="restricted">restricted</option>
+                          <option value="adminOnly">adminOnly</option>
+                        </select>
+                      </label>
+                      <label>
+                        当前生效
+                        <select id="announcement-admin-filter-active" name="active">
+                          <option value="">全部生效状态</option>
+                          <option value="true">生效中</option>
+                          <option value="false">未生效</option>
+                        </select>
+                      </label>
+                      <label>
+                        关键词
+                        <input id="announcement-admin-filter-keyword" name="keyword" type="search" autocomplete="off" placeholder="标题 / 摘要 / ID" data-i18n-placeholder="admin.announcements.searchPlaceholder">
+                      </label>
+                      <div class="announcement-admin-filter-actions">
+                        <button class="primary-button" type="submit">筛选</button>
+                        <button id="announcement-admin-filter-reset" class="secondary-button" type="button" data-i18n="admin.action.reset">重置</button>
+                      </div>
+                    </details>
+                  </form>
+                  <div id="announcement-admin-summary" class="history-summary" aria-live="polite"></div>
+                  <div id="announcement-admin-list" class="announcement-admin-list" aria-live="polite"></div>
+                </section>
+                <section class="announcement-admin-editor-col" aria-label="公告编辑">
+                  <div id="announcement-admin-empty" class="empty-state" data-i18n="admin.announcements.emptyEditor">选择一条内容编辑，或新建草稿</div>
+                  <form id="announcement-admin-editor" class="announcement-admin-editor" hidden>
+                    <div class="announcement-admin-editor-head">
+                      <div>
+                        <h3 id="announcement-admin-editor-title" data-i18n="admin.announcements.editorTitle">公告编辑</h3>
+                        <div id="announcement-admin-editor-meta" class="selected-user-meta"></div>
+                      </div>
+                      <div id="announcement-admin-actions" class="announcement-admin-actions"></div>
+                    </div>
+                    <div id="announcement-admin-read-summary" class="announcement-admin-read-summary"></div>
+                    <label for="announcement-admin-type">类型</label>
+                    <select id="announcement-admin-type" name="type">
+                      <option value="announcement">announcement</option>
+                      <option value="news">news</option>
+                      <option value="release_note">release_note</option>
+                      <option value="changelog">changelog</option>
+                    </select>
+                    <div class="admin-tabs announcement-locale-tabs" role="tablist" aria-label="公告内容语言" data-i18n-aria-label="admin.announcements.localeTabs">
+                      <button id="announcement-admin-locale-zh" class="admin-tab active" type="button" role="tab" aria-selected="true" aria-controls="announcement-admin-fields-zh" data-announcement-locale="zh-CN">中文</button>
+                      <button id="announcement-admin-locale-en" class="admin-tab" type="button" role="tab" aria-selected="false" aria-controls="announcement-admin-fields-en" data-announcement-locale="en-US">English</button>
+                    </div>
+                    <fieldset id="announcement-admin-fields-zh" class="announcement-locale-fields" data-announcement-fields="zh-CN">
+                      <legend data-i18n="admin.announcements.zhContent">中文内容（必填）</legend>
+                      <label for="announcement-admin-title-input" data-i18n="admin.field.title">标题</label>
+                      <input id="announcement-admin-title-input" name="title" type="text" maxlength="160">
+                      <label for="announcement-admin-summary-input" data-i18n="admin.field.summary">摘要</label>
+                      <textarea id="announcement-admin-summary-input" name="summary" rows="3" maxlength="500"></textarea>
+                      <label for="announcement-admin-body" data-i18n="admin.field.body">正文</label>
+                      <textarea id="announcement-admin-body" name="body" rows="9"></textarea>
+                    </fieldset>
+                    <fieldset id="announcement-admin-fields-en" class="announcement-locale-fields" data-announcement-fields="en-US" hidden>
+                      <legend data-i18n="admin.announcements.enContent">English content（发布前必填）</legend>
+                      <label for="announcement-admin-title-input-en" data-i18n="admin.field.title">标题</label>
+                      <input id="announcement-admin-title-input-en" name="titleEn" type="text" maxlength="160">
+                      <label for="announcement-admin-summary-input-en" data-i18n="admin.field.summary">摘要</label>
+                      <textarea id="announcement-admin-summary-input-en" name="summaryEn" rows="3" maxlength="500"></textarea>
+                      <label for="announcement-admin-body-en" data-i18n="admin.field.body">正文</label>
+                      <textarea id="announcement-admin-body-en" name="bodyEn" rows="9"></textarea>
+                    </fieldset>
+                    <div class="announcement-admin-two-col">
+                      <label>
+                        可见性
+                        <select id="announcement-admin-visibility" name="visibility">
+                          <option value="public">public</option>
+                          <option value="customer">customer</option>
+                          <option value="partner">partner</option>
+                          <option value="internal">internal</option>
+                          <option value="restricted">restricted</option>
+                          <option value="adminOnly">adminOnly</option>
+                        </select>
+                      </label>
+                      <label>
+                        Modal
+                        <select id="announcement-admin-modal-behavior" name="modalBehavior">
+                          <option value="none">none</option>
+                          <option value="once_per_version">once_per_version</option>
+                          <option value="force_until_expiry">force_until_expiry</option>
+                        </select>
+                      </label>
+                      <label>
+                        优先级
+                        <input id="announcement-admin-priority" name="priority" type="number" step="1">
+                      </label>
+                      <label>
+                        角色 allowlist
+                        <input id="announcement-admin-role-allow-list" name="roleAllowList" type="text" placeholder="admin, internal">
+                      </label>
+                      <label>
+                        开始时间
+                        <input id="announcement-admin-starts-at" name="startsAt" type="datetime-local">
+                      </label>
+                      <label>
+                        结束时间
+                        <input id="announcement-admin-ends-at" name="endsAt" type="datetime-local">
+                      </label>
+                    </div>
+                    <label class="checkbox-line">
+                      <input id="announcement-admin-requires-login" name="requiresLogin" type="checkbox">
+                      <span>需要登录</span>
+                    </label>
+                    <label class="checkbox-line">
+                      <input id="announcement-admin-pinned" name="pinned" type="checkbox">
+                      <span>置顶</span>
+                    </label>
+                    <fieldset class="resource-grants-fieldset announcement-grants-fieldset">
+                      <legend>授权要求（requiredGrants）</legend>
+                      <label for="announcement-admin-grant-brands">品牌</label>
+                      <div id="announcement-admin-grant-brands" class="admin-token-picker" data-token-field="brands"></div>
+                      <label for="announcement-admin-grant-product-lines">产品线</label>
+                      <div id="announcement-admin-grant-product-lines" class="admin-token-picker" data-token-field="productLines"></div>
+                      <label for="announcement-admin-grant-chip-ids">芯片</label>
+                      <div id="announcement-admin-grant-chip-ids" class="admin-token-picker" data-token-field="chipIds"></div>
+                      <label for="announcement-admin-grant-document-ids">文档</label>
+                      <div id="announcement-admin-grant-document-ids" class="admin-token-picker" data-token-field="documentIds"></div>
+                      <label for="announcement-admin-grant-scope-preset-ids">Scope Preset</label>
+                      <div id="announcement-admin-grant-scope-preset-ids" class="admin-token-picker" data-token-field="scopePresetIds"></div>
+                      <label for="announcement-admin-grant-model-ids">模型</label>
+                      <div id="announcement-admin-grant-model-ids" class="admin-token-picker" data-token-field="modelIds"></div>
+                      <label for="announcement-admin-grant-mcp-tools">MCP 工具</label>
+                      <div id="announcement-admin-grant-mcp-tools" class="admin-token-picker" data-token-field="mcpTools"></div>
+                    </fieldset>
+                    <fieldset class="announcement-source-fieldset">
+                      <legend>来源引用</legend>
+                      <label for="announcement-admin-source-kind">类型</label>
+                      <select id="announcement-admin-source-kind">
+                        <option value="">无</option>
+                        <option value="manual">手工</option>
+                        <option value="phase_release_note">阶段 release note</option>
+                        <option value="phase_changelog">阶段 changelog</option>
+                      </select>
+                      <label for="announcement-admin-source-id">Phase</label>
+                      <input id="announcement-admin-source-id" type="number" step="1" min="1" autocomplete="off">
+                      <label for="announcement-admin-source-url">Version</label>
+                      <input id="announcement-admin-source-url" type="text" autocomplete="off">
+                      <label for="announcement-admin-source-label">Note</label>
+                      <input id="announcement-admin-source-label" type="text" autocomplete="off">
+                    </fieldset>
+                    <div class="announcement-admin-editor-footer">
+                      <button id="announcement-admin-save" class="primary-button" type="submit" data-i18n="admin.announcements.save">保存草稿/编辑</button>
+                      <button id="announcement-admin-refresh" class="secondary-button" type="button" data-i18n="admin.action.refresh">刷新</button>
+                      <span id="announcement-admin-status-line" class="muted-inline" aria-live="polite"></span>
+                    </div>
+                  </form>
+                </section>
+                <aside class="announcement-admin-preview-col" aria-label="门户呈现预览">
+                  <div class="section-title">门户呈现预览</div>
+                  <div class="announcement-preview-card-outer">
+                    <div class="announcement-preview-card-head" data-i18n="admin.announcements.preview">用户端公告卡片预览</div>
+                    <div id="announcement-admin-portal-preview" class="announcement-admin-preview"></div>
+                  </div>
+                </aside>
+              </div>
+            </section>
+          </section>
+
+          <section id="panel-resources" class="admin-section admin-detail resources-admin-workspace" aria-label="文档与 Scope" data-admin-control hidden>
+            <section class="panel resources-admin-panel">
+              <div class="history-toolbar-head">
+                <div>
+                  <h2>文档与 Scope</h2>
+                  <p>维护文档可见性契约与 Scope Preset：可见性分级、状态流转（draft→pending→approved/rejected/archived）、授权要求与孤儿引用校验。</p>
+                </div>
+                <button id="resources-new" class="primary-button" type="button">新建</button>
+              </div>
+              <p id="resources-error" class="error-line" role="alert"></p>
+              <p id="resources-summary" class="muted-inline" aria-live="polite"></p>
+              <div id="resources-orphan-banner" class="status-line restart-notice" role="status" aria-live="polite" hidden></div>
+
+              <div class="resources-tabs" role="tablist" aria-label="资源类别" data-i18n-aria-label="admin.resources.tabsAria">
+                <button id="resources-tab-documents" class="history-tab active" type="button" role="tab"
+                  data-resources-tab="documents" aria-selected="true">文档可见性</button>
+                <button id="resources-tab-presets" class="history-tab" type="button" role="tab"
+                  data-resources-tab="scope-presets" aria-selected="false">Scope Presets</button>
+              </div>
+
+              <div class="resources-pane" data-resources-pane="documents">
+                <form id="resources-documents-filter-form" class="admin-filterbar" onsubmit="return false">
+                  <div class="admin-filterbar-search">
+                    <svg class="admin-filterbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <label class="sr-only" for="resources-documents-search">搜索文档 ID / 标签</label>
+                    <input id="resources-documents-search" type="search" autocomplete="off" placeholder="搜索文档 ID / 标签">
+                  </div>
+                  <label class="sr-only" for="resources-documents-visibility">可见性</label>
+                  <select id="resources-documents-visibility">
+                    <option value="">全部可见性</option>
+                  </select>
+                  <label class="sr-only" for="resources-documents-status">状态</label>
+                  <select id="resources-documents-status">
+                    <option value="">全部状态</option>
+                  </select>
+                  <div class="admin-filterbar-spacer"></div>
+                </form>
+                <table class="user-table" aria-label="文档可见性列表" data-i18n-aria-label="admin.resources.documentsTableAria">
+                  <thead>
+                    <tr>
+                      <th>文档 ID</th>
+                      <th>标签</th>
+                      <th>可见性</th>
+                      <th>状态</th>
+                      <th>芯片</th>
+                      <th>审批</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resources-documents-list" aria-live="polite"></tbody>
+                </table>
+              </div>
+
+              <div class="resources-pane" data-resources-pane="scope-presets" hidden>
+                <p id="resources-preset-orphan-warning" class="error-line" role="status" aria-live="polite"></p>
+                <table class="user-table" aria-label="Scope Preset 列表" data-i18n-aria-label="admin.resources.presetsTableAria">
+                  <thead>
+                    <tr>
+                      <th>Preset ID</th>
+                      <th>标签</th>
+                      <th>可见性</th>
+                      <th>状态</th>
+                      <th>文档</th>
+                      <th>芯片</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resources-presets-list" aria-live="polite"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <div id="resource-editor-backdrop" class="admin-drawer-backdrop" hidden></div>
+            <aside id="resource-editor-drawer" class="admin-drawer" role="dialog" aria-modal="true" aria-labelledby="resource-editor-title" hidden>
+              <div class="admin-drawer-header">
+                <div>
+                  <h3 id="resource-editor-title">编辑资源</h3>
+                  <p id="resource-editor-meta" class="selected-user-meta"></p>
+                </div>
+                <button id="resource-editor-close" class="admin-drawer-close" type="button" aria-label="关闭">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="admin-drawer-body">
+                <form id="resource-editor-form" class="profile-form" data-admin-control>
+                <p id="resource-editor-status-line" class="error-line" role="alert"></p>
+
+                <label for="resource-editor-id">ID（创建后不可改）</label>
+                <input id="resource-editor-id" name="resourceId" type="text" autocomplete="off">
+
+                <label for="resource-editor-label">标签</label>
+                <input id="resource-editor-label" name="label" type="text" autocomplete="off">
+
+                <label for="resource-editor-visibility">可见性</label>
+                <select id="resource-editor-visibility" name="visibility">
+                  <option value="public">public</option>
+                  <option value="customer">customer</option>
+                  <option value="partner">partner</option>
+                  <option value="internal">internal</option>
+                  <option value="adminOnly">adminOnly</option>
+                  <option value="restricted">restricted</option>
+                </select>
+
+                <label for="resource-editor-status">状态（draft→pending→approved/rejected→archived）</label>
+                <select id="resource-editor-status" name="status">
+                  <option value="draft">draft</option>
+                  <option value="pending">pending</option>
+                  <option value="approved">approved</option>
+                  <option value="rejected">rejected</option>
+                  <option value="archived">archived</option>
+                </select>
+                <div id="resource-editor-status-flow" class="resource-status-flow" aria-live="polite"></div>
+                <div id="resource-editor-status-actions" class="resource-status-actions" aria-label="状态动作" data-i18n-aria-label="admin.resources.statusActionsAria"></div>
+
+                <label for="resource-editor-brands">品牌</label>
+                <div id="resource-editor-brands" class="admin-token-picker" data-token-field="brands"></div>
+
+                <label for="resource-editor-product-lines">产品线</label>
+                <div id="resource-editor-product-lines" class="admin-token-picker" data-token-field="productLines"></div>
+
+                <label for="resource-editor-application-tags">功能标签</label>
+                <div id="resource-editor-application-tags" class="admin-token-picker" data-token-field="applicationTags"></div>
+
+                <label id="resource-editor-chip-ids-label" for="resource-editor-chip-ids">芯片 ID</label>
+                <div id="resource-editor-chip-ids" class="admin-token-picker" data-token-field="chipIds"></div>
+
+                <label id="resource-editor-document-ids-label" for="resource-editor-document-ids">关联文档 ID（仅 Scope Preset）</label>
+                <div id="resource-editor-document-ids" class="admin-token-picker" data-token-field="documentIds"></div>
+
+                <label for="resource-editor-source-labels">来源标签</label>
+                <div id="resource-editor-source-labels" class="admin-token-picker" data-token-field="sourceLabels"></div>
+
+                <fieldset class="resource-grants-fieldset">
+                  <legend>授权要求（requiredGrants，满足任一即放行）</legend>
+                  <label for="resource-editor-grant-brands">品牌</label>
+                  <div id="resource-editor-grant-brands" class="admin-token-picker" data-token-field="brands"></div>
+                  <label for="resource-editor-grant-product-lines">产品线</label>
+                  <div id="resource-editor-grant-product-lines" class="admin-token-picker" data-token-field="productLines"></div>
+                  <label for="resource-editor-grant-chip-ids">芯片</label>
+                  <div id="resource-editor-grant-chip-ids" class="admin-token-picker" data-token-field="chipIds"></div>
+                  <label for="resource-editor-grant-document-ids">文档</label>
+                  <div id="resource-editor-grant-document-ids" class="admin-token-picker" data-token-field="documentIds"></div>
+                  <label for="resource-editor-grant-scope-preset-ids">Scope Preset</label>
+                  <div id="resource-editor-grant-scope-preset-ids" class="admin-token-picker" data-token-field="scopePresetIds"></div>
+                  <label for="resource-editor-grant-model-ids">模型</label>
+                  <div id="resource-editor-grant-model-ids" class="admin-token-picker" data-token-field="modelIds"></div>
+                  <label for="resource-editor-grant-mcp-tools">MCP 工具</label>
+                  <div id="resource-editor-grant-mcp-tools" class="admin-token-picker" data-token-field="mcpTools"></div>
+                </fieldset>
+
+                <div class="resource-editor-actions">
+                  <button id="resource-editor-save" class="primary-button" type="submit">保存</button>
+                  <button id="resource-editor-validate" class="secondary-button" type="button" hidden>校验孤儿引用</button>
+                  <button id="resource-editor-delete" class="danger-button" type="button" hidden>删除</button>
+                  <button id="resource-editor-cancel" class="secondary-button" type="button">取消</button>
+                </div>
+                </form>
+              </div>
+            </aside>
+          </section>
+
+          <section id="panel-feedback" class="admin-section feedback-workspace" aria-label="反馈&工单" data-admin-control hidden>
+            <section id="ticket-admin-center" class="panel ticket-admin-panel" aria-label="反馈&工单统一管理" data-i18n-aria-label="admin.tickets.centerAria">
+              <div class="history-toolbar-head">
+                <h2>反馈&工单</h2>
+                <div id="ticket-admin-summary" class="history-summary" aria-live="polite"></div>
+              </div>
+              <form id="ticket-admin-filter-form" class="ticket-admin-toolbar">
+                <label>
+                  类型
+                  <select id="ticket-admin-filter-type" name="type">
+                    <option value="">全部</option>
+                    <option value="feedback">反馈</option>
+                    <option value="datasheet_submission">资料提交</option>
+                    <option value="account_application">加入申请</option>
+                  </select>
+                </label>
+                <label>
+                  状态
+                  <select id="ticket-admin-filter-status" name="status">
+                    <option value="">全部</option>
+                  </select>
+                </label>
+                <label>
+                  补充信息
+                  <select id="ticket-admin-filter-needs-more-info" name="needsMoreInfo">
+                    <option value="">全部</option>
+                    <option value="true">需要补充</option>
+                    <option value="false">无需补充</option>
+                  </select>
+                </label>
+                <label>
+                  关键词
+                  <input id="ticket-admin-filter-keyword" name="keyword" type="search" autocomplete="off" placeholder="工单号 / 标题 / 账号 / 厂商" data-i18n-placeholder="admin.tickets.filterKeywordPlaceholder">
+                </label>
+                <button id="ticket-admin-more-filters-toggle" class="secondary-button" type="button" aria-expanded="false" aria-controls="ticket-admin-more-filters">更多筛选</button>
+                <div id="ticket-admin-more-filters" class="ticket-admin-more-filters" hidden>
+                <label>
+                  反馈类型
+                  <select id="ticket-admin-filter-feedback-type" name="feedbackType">
+                    <option value="">全部</option>
+                    <option value="useful">有用</option>
+                    <option value="off-target">答非所问</option>
+                    <option value="missing-context">资料不足</option>
+                    <option value="bad-citation">引用错误</option>
+                    <option value="too-long">太啰嗦</option>
+                    <option value="safety-risk">泄露/安全风险</option>
+                    <option value="deeper-answer">需要更深入</option>
+                  </select>
+                </label>
+                <label>
+                  芯片
+                  <input id="ticket-admin-filter-chip" name="chipId" type="search" autocomplete="off" placeholder="chipId">
+                </label>
+                <label>
+                  文档
+                  <input id="ticket-admin-filter-document" name="documentId" type="search" autocomplete="off" placeholder="documentId">
+                </label>
+                <label>
+                  Scope
+                  <input id="ticket-admin-filter-scope" name="scopePresetId" type="search" autocomplete="off" placeholder="scopePresetId">
+                </label>
+                <label>
+                  模型
+                  <input id="ticket-admin-filter-model" name="modelId" type="search" autocomplete="off" placeholder="modelId">
+                </label>
+                <label>
+                  快捷
+                  <select id="ticket-admin-filter-review-signal" name="reviewSignal">
+                    <option value="">全部</option>
+                    <option value="bad-citation">bad-citation</option>
+                    <option value="safety-risk">safety-risk</option>
+                  </select>
+                </label>
+                </div>
+                <button class="primary-button" type="submit">筛选</button>
+                <button id="ticket-admin-filter-reset" class="secondary-button" type="button">重置</button>
+              </form>
+              <p id="feedback-admin-error" class="error-line" role="alert"></p>
+              <div class="ticket-admin-grid">
+                <section class="ticket-admin-list" aria-label="工单列表" data-i18n-aria-label="admin.tickets.listAria">
+                  <div id="ticket-admin-list" class="feedback-list" aria-live="polite"></div>
+                </section>
+                <section class="ticket-admin-detail" aria-label="工单详情">
+                  <div id="ticket-admin-detail-empty" class="empty-state">选择一条工单查看详情、附件和处理动作</div>
+                  <div id="ticket-admin-detail" hidden>
+                    <div class="ticket-admin-detail-head">
+                      <div>
+                        <h2 id="ticket-admin-detail-title">工单详情</h2>
+                        <div id="ticket-admin-detail-meta" class="selected-user-meta"></div>
+                      </div>
+                      <span id="ticket-admin-type-badge" class="ticket-admin-type-badge"></span>
+                    </div>
+                    <div id="ticket-admin-detail-body" class="feedback-detail-body"></div>
+                    <div class="ticket-admin-detail-workbench">
+                      <div class="ticket-admin-conversation">
+                        <h3 class="detail-subhead">沟通记录</h3>
+                        <div id="ticket-admin-messages" class="ticket-message-thread" aria-live="polite"></div>
+                        <form id="ticket-admin-reply-form" class="stack-form ticket-reply-form">
+                          <label for="ticket-admin-reply-text">回复</label>
+                          <textarea id="ticket-admin-reply-text" name="text" rows="3" maxlength="4000" placeholder="写一条对用户可见的回复…" data-i18n-placeholder="admin.tickets.replyPlaceholder"></textarea>
+                          <div class="ticket-admin-reply-actions">
+                            <label class="checkbox-line">
+                              <input id="ticket-admin-reply-internal" name="internal" type="checkbox" value="true">
+                              <span>仅内部可见</span>
+                            </label>
+                            <button id="ticket-admin-reply-submit" class="secondary-button" type="submit">发送回复</button>
+                            <span id="ticket-admin-reply-status" class="muted-inline" aria-live="polite"></span>
+                          </div>
+                        </form>
+                      </div>
+                      <aside class="ticket-admin-sidecar">
+                        <section class="ticket-admin-side-section">
+                          <h3 class="detail-subhead">附件</h3>
+                          <div class="inline-form ticket-material-actions">
+                            <button id="ticket-admin-download-all" class="secondary-button" type="button">全部下载</button>
+                            <span id="ticket-admin-material-notice" class="muted-inline">审核晋升入知识库为未来模块。</span>
+                          </div>
+                          <div id="ticket-admin-attachments" class="ticket-admin-attachment-list"></div>
+                          <pre id="ticket-admin-preview" class="ticket-admin-preview" hidden></pre>
+                        </section>
+                        <form id="ticket-admin-review-form" class="stack-form ticket-admin-review-card">
+                          <h3 class="detail-subhead">处理动作</h3>
+                          <label for="ticket-admin-status">状态</label>
+                          <select id="ticket-admin-status" name="status">
+                          </select>
+                          <label class="checkbox-line">
+                            <input id="ticket-admin-needs-more-info" name="needsMoreInfo" type="checkbox" value="true">
+                            <span>需要补充信息</span>
+                          </label>
+                          <label for="ticket-admin-public-note">公开备注</label>
+                          <textarea id="ticket-admin-public-note" name="publicNote" rows="3"></textarea>
+                          <label for="ticket-admin-internal-note">内部备注</label>
+                          <textarea id="ticket-admin-internal-note" name="internalNote" rows="3"></textarea>
+                          <label for="ticket-admin-result">处理结果</label>
+                          <textarea id="ticket-admin-result" name="result" rows="3"></textarea>
+                          <div class="form-actions">
+                            <button id="ticket-admin-review-save" class="primary-button" type="submit">保存工单</button>
+                            <p id="ticket-admin-status-line" class="status-line" aria-live="polite"></p>
+                          </div>
+                        </form>
+                        <div id="ticket-admin-application-actions" class="ticket-admin-application-actions" hidden></div>
+                      </aside>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+          </section>
+
+          <section id="panel-prompts" class="admin-section admin-detail prompt-admin-detail" aria-label="提示词管理" data-admin-control hidden>
+            <div class="prompt-split-pane">
+              <div class="panel prompt-nav-pane">
+                <div class="prompt-nav-head">
+                  <div>
+                    <h2>提示词管理</h2>
+                    <p>按芯片维护 datasheet 问答提示词。</p>
+                  </div>
+                  <span id="prompt-chip-count" class="admin-badge admin-badge-muted">—</span>
+                </div>
+                <div id="prompt-file-list" class="prompt-chip-list" aria-live="polite"></div>
+                <p id="prompt-list-error" class="error-line" role="alert"></p>
+              </div>
+              <div class="panel detail-body prompt-editor-pane">
+                <div id="prompt-editor-container" class="prompt-editor-container" hidden>
+                  <div class="prompt-editor-header">
+                    <h3 id="prompt-file-name">编辑提示词</h3>
+                    <button id="prompt-save" class="primary-button" type="button">保存</button>
+                    <button id="prompt-cancel" class="secondary-button" type="button">取消</button>
+                  </div>
+                  <div id="prompt-editor-status" class="prompt-editor-status"></div>
+                  <div class="prompt-body-grid">
+                    <div class="prompt-textarea-wrap">
+                      <textarea id="prompt-content" class="prompt-content" rows="20" placeholder="输入提示词内容…" data-i18n-placeholder="admin.prompts.contentPlaceholder"></textarea>
+                    </div>
+                    <div class="prompt-history-panel prompt-history-rail" aria-label="提示词版本历史" data-i18n-aria-label="admin.prompts.historyAria">
+                      <div class="hr-title">版本历史</div>
+                      <div id="prompt-history-summary" class="prompt-history-summary">暂无版本历史</div>
+                      <div id="prompt-history-list" class="prompt-history-list" aria-live="polite"></div>
+                      <button id="prompt-rollback" class="secondary-button" type="button" disabled>载入上一版草稿</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="prompt-error-panel" class="prompt-error-panel" hidden>
+                  <strong id="prompt-error-title">提示词加载失败</strong>
+                  <p id="prompt-error-message"></p>
+                  <button id="prompt-retry" class="secondary-button" type="button">重试</button>
+                </div>
+                <div id="prompt-placeholder" class="prompt-placeholder">
+                  <p>选择左侧芯片进行编辑</p>
+                  <button id="prompt-template-create" class="secondary-button" type="button" hidden>从模板创建</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/auth.js?v=2.2.42"></script>
+    <script src="/ui-kit.js?v=2.2.43"></script>
+    <script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/admin.js?v=2.2.44"></script>
+    <span class="fingerprint-summary" data-product-fingerprint hidden></span>
+  </body>
+</html>

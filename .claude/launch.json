@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agentx-webui",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["bin/agentx", "server", "--no-auth", "--port", "3100"],
+      "port": 3100
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="0; url=/mcp-access">
+    <link rel="canonical" href="/mcp-access">
+    <title>AgentX · MCP Access Center</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page portal-workspace-page mcp-access-page reference-page" data-shell="marketing" data-active="mcp">
+    <div class="page landing-shell portal-workspace-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页"><span class="brand-mark logo">AX</span><span data-product-name>AgentX</span></a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+
+      <main class="portal-workspace-main reference-main" aria-label="MCP 接入中心">
+        <section class="hero portal-workspace-hero reference-hero mcp-access-overview" aria-label="MCP 接入指南">
+          <span class="kicker mcp-access-kicker">REMOTE MCP · ACCESS</span>
+          <h1 data-i18n="mcp.client.title">AgentX MCP Access Center</h1>
+          <p class="lede mcp-access-hero-copy"><code>/mcp-client</code> <span data-i18n="mcp.client.legacyNote">is a legacy alias. The current MCP access center is</span> <a href="/mcp-access">/mcp-access</a>.</p>
+          <p class="lede mcp-access-hero-copy" data-i18n="mcp.client.legacyBody">Use the current page for opencode, Codex, Claude Code templates, chatMode-based agent_spawn examples, the AgentX client package, and safe placeholder-based setup.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg primary-button" href="/mcp-access" data-i18n="mcp.client.open">Open /mcp-access</a>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/auth.js?v=2.2.42"></script>
+    <script src="/ui-kit.js?v=2.2.43"></script>
+    <script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/assets/agentx-webui.js?v=2.2.43"></script>
+  </body>
+</html>

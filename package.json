@@ -1,0 +1,113 @@
+{
+  "name": "chip-agentx",
+  "version": "2.2.45",
+  "type": "module",
+  "description": "Multi-agent session lifecycle manager for AI coding agents with datasheet knowledge-base retrieval",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "agentx": "./bin/agentx"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/cli/index.js",
+      "types": "./dist/cli/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "src",
+    "public"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:webui": "vite build --config vite.webui.config.ts",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "codex",
+    "opencode",
+    "pi",
+    "session-manager",
+    "pty",
+    "coding-agent",
+    "mcp",
+    "model-context-protocol",
+    "datasheet",
+    "llm"
+  ],
+  "author": "Merlin-XYzhenbai (https://github.com/Merlin-XYzhenbai)",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/levitation-well/Chip-AgentX.git"
+  },
+  "homepage": "https://github.com/levitation-well/Chip-AgentX#readme",
+  "bugs": {
+    "url": "https://github.com/levitation-well/Chip-AgentX/issues"
+  },
+  "peerDependencies": {
+    "node-pty": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "node-pty": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@lydell/node-pty": "^1.2.0-beta.12",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-toast": "^1.2.15",
+    "bcryptjs": "^3.0.3",
+    "cac": "^7.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "dotenv": "^17.4.2",
+    "glasscn-ui": "^0.7.1",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.16.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.6.0",
+    "tree-kill": "^1.2.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.5",
+    "autoprefixer": "^10.5.0",
+    "jsdom": "^29.1.0",
+    "playwright": "^1.60.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.5"
+  }
+}

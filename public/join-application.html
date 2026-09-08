@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 加入申请</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page ticket-page portal-workspace-page reference-page" data-shell="marketing">
+    <div class="page landing-shell portal-workspace-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页"><span class="brand-mark logo">AX</span><span data-product-name>AgentX</span></a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>      <main class="portal-workspace-main narrow-workspace">
+        <section class="workspace-title-block reveal d1"><h1>加入申请</h1><p class="muted small mt8">提交申请后我们会尽快审核，届时通过你留的联系方式通知结果。</p></section>
+        <section id="join-application" class="panel ticket-query-card account-application-card reveal d1" aria-label="加入申请表单"><div class="panel-head"><div><h2>申请账号</h2><p class="sub">提交后进入审核</p></div><span class="badge gray">生成 AP 编号</span></div><form id="account-application-form" class="feedback-ticket-form reference-form"><div class="field-row"><label class="field">账号名<input class="input" name="username" type="text" maxlength="64" autocomplete="username" required placeholder="邮箱前缀、公司名或常用账号"></label><label class="field">密码<input class="input" name="password" type="password" minlength="8" maxlength="256" autocomplete="new-password" required placeholder="至少 8 位"></label></div><label class="field recommended-field">公司<input class="input" name="company" type="text" maxlength="160" autocomplete="organization" placeholder="建议填写公司或团队"></label><label class="field">为什么想加入这个服务<textarea class="textarea" name="reason" rows="4" maxlength="1000" placeholder="例如：需要查询芯片资料、接入 MCP 或参与资料贡献"></textarea></label><div class="field-row"><label class="field">从哪里听说这个网站<input class="input" name="heardFrom" type="text" maxlength="240" placeholder="朋友推荐、搜索、客户支持、社群、内部分享等"></label><label class="field">职业 / 岗位<input class="input" name="occupation" type="text" maxlength="160" placeholder="FAE、嵌入式工程师、汽车电子工程师、学生等"></label></div><label class="field">喜欢什么功能<input class="input" name="favoriteFeature" type="text" maxlength="500" placeholder="例如：芯片资料问答、MCP、最佳实践、资料提交"></label><label class="field">期待使用什么功能<input class="input" name="expectedFeature" type="text" maxlength="500" placeholder="告诉我们最想优先开放或完善的能力"></label><label class="field">联系方式<input class="input" name="contact" type="text" maxlength="500" autocomplete="off" placeholder="邮箱、手机或其他可联系信息"></label><div class="flex center gap12 form-actions"><button class="btn btn-primary primary-button" type="submit">提交申请</button><p id="account-application-status" class="status-line" aria-live="polite"></p></div></form></section>
+      </main>      <footer class="landing-footer portal-footer"><span data-product-signature>Powered by AgentX</span><span class="fingerprint-summary" data-product-fingerprint hidden></span><div data-product-changelog></div></footer>
+    </div>
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script><script src="/assets/agentx-webui.js?v=2.2.43"></script><script src="/tickets.js?v=2.2.43"></script>
+  </body>
+</html>

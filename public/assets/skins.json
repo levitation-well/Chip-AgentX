@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "default": "cal",
+  "skins": [
+    {
+      "id": "cal",
+      "name": "Cal.com",
+      "mood": "Neutral scheduling OS",
+      "accent": "#111827",
+      "tokens": {
+        "bg": "#f5f5f4",
+        "surface": "#ffffff",
+        "panel": "rgba(255,255,255,.78)",
+        "text": "#111827",
+        "muted": "#737373",
+        "border": "#e5e5e5",
+        "accentText": "#ffffff",
+        "subtle": "#ededed",
+        "shadow": "0 26px 76px rgba(17,24,39,.12)",
+        "gradient": "linear-gradient(135deg, #fafafa, #ffffff 58%, #f2f2f2)",
+        "radius": "18px",
+        "display": "Inter, Segoe UI, Microsoft YaHei, sans-serif"
+      }
+    },
+    {
+      "id": "voltagent",
+      "name": "VoltAgent",
+      "mood": "Void green terminal",
+      "accent": "#00d47e",
+      "tokens": {
+        "bg": "#06110a",
+        "surface": "#0a1a10",
+        "panel": "rgba(10,26,16,.82)",
+        "text": "#ecfff4",
+        "muted": "#89f0b8",
+        "border": "#0d6b3c",
+        "accentText": "#031008",
+        "subtle": "#0d2a19",
+        "shadow": "0 24px 80px rgba(0,212,126,.13)",
+        "gradient": "radial-gradient(circle at 15% 0%, rgba(0,212,126,.18), transparent 32%), #06110a",
+        "radius": "14px",
+        "display": "JetBrains Mono, Cascadia Code, monospace"
+      }
+    }
+  ]
+}

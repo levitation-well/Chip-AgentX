@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · MCP 接入中心</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page portal-workspace-page mcp-access-page reference-page" data-shell="marketing" data-active="mcp">
+    <div class="page landing-shell portal-workspace-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页"><span class="brand-mark logo">AX</span><span data-product-name>AgentX</span></a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+
+      <main class="portal-workspace-main reference-main" aria-label="MCP 接入中心">
+        <section class="hero portal-workspace-hero reference-hero mcp-access-overview" aria-label="MCP 接入指南">
+          <span class="kicker mcp-access-kicker reveal d1">REMOTE MCP · 接入指南</span>
+          <h1 class="reveal d2">MCP 接入中心</h1>
+          <p id="mcp-access-status" class="account-status reveal d3" aria-live="polite"></p>
+          <p class="lede mcp-access-hero-copy reveal d3">在 opencode、Codex、Claude Code 等客户端中接入 AgentX，直接检索芯片资料。登录后可在用户中心创建和管理 Key。</p>
+          <div class="hero-actions reveal d4">
+            <a class="btn btn-primary btn-lg primary-button" href="/account#keys">创建我的 Key</a>
+            <a class="btn btn-ghost btn-lg secondary-button" href="#templates">查看客户端模板</a>
+          </div>
+          <div class="mcp-access-session-strip reveal d5">
+            <span class="badge gray" data-product-version></span>
+            <span id="mcp-access-user-status" class="badge teal">公共接入说明</span>
+            <button id="mcp-access-refresh" class="btn btn-ghost btn-sm secondary-button" type="button">刷新</button>
+            <button id="mcp-access-login" class="btn btn-ghost btn-sm secondary-button" type="button">登录</button>
+          </div>
+        </section>
+
+        <section class="mcp-section steps" aria-label="三步接入">
+          <div class="section-title"><h2>三步接入</h2></div>
+          <div class="step-grid">
+            <article class="step panel reveal d1"><span class="n">1</span><h3>复制占位符模板</h3><p>选择客户端类型，复制对应的配置模板。</p></article>
+            <article class="step panel reveal d2"><span class="n">2</span><h3>填入私有 Key</h3><p>在 <a class="code-inline" href="/account#keys">用户中心</a> 创建一次性 Key，替换模板里的 <code class="code-inline">&lt;YOUR_PRIVATE_KEY&gt;</code>。</p></article>
+            <article class="step panel reveal d3"><span class="n">3</span><h3>运行 whoami 烟测</h3><p>连接后调用 <code class="code-inline">agentx_whoami({})</code> 确认身份与权限。</p></article>
+          </div>
+        </section>
+
+        <section class="mcp-section reveal d1" aria-label="服务端点">
+          <div class="section-title"><h2>服务端点</h2></div>
+          <div class="mcp-access-server-grid grid2">
+            <article class="panel"><div class="flabel">Remote endpoint</div><code id="mcp-access-remote-url" class="code-inline">-</code><button class="btn btn-ghost btn-sm secondary-button mt16" type="button" data-copy-url="remote">复制 URL</button></article>
+            <article class="panel"><div class="flabel">Verify endpoint</div><code id="mcp-access-verify-url" class="code-inline">-</code><button class="btn btn-ghost btn-sm secondary-button mt16" type="button" data-copy-url="verify">复制 URL</button></article>
+          </div>
+          <p class="mcp-access-public-note" id="mcp-access-public-note">未登录时仅显示公共接入信息。登录后可查看 Key、授权模型与资源详情。</p>
+          <div class="mcp-access-onboarding-hint"><span id="mcp-access-onboarding-hint" data-i18n="mcp.onboarding.hint">建议先复制配置模板，填入 Key 后运行 agentx_whoami({}) 验证。</span><button id="mcp-access-complete-step" class="btn btn-ghost btn-sm secondary-button" type="button">完成 MCP 接入步骤</button></div>
+        </section>
+
+        <section id="templates" class="mcp-section reveal d2" aria-label="客户端模板">
+          <div class="section-title"><h2>客户端模板</h2><span id="mcp-access-template-meta" class="muted-line"></span></div>
+          <div class="panel mcp-access-template-panel">
+            <div class="mode-slider mcp-access-template-tabs" role="tablist" aria-label="客户端模板"><button class="seg active" type="button" data-template="opencode" aria-selected="true">opencode</button><button class="seg" type="button" data-template="codex" aria-selected="false">Codex</button><button class="seg" type="button" data-template="claude-code" aria-selected="false">Claude Code</button><button class="seg" type="button" disabled>Cursor</button><button class="seg" type="button" disabled>Continue</button><button class="seg" type="button" disabled>Cline</button></div>
+            <pre class="code-block mcp-access-template-code"><code id="mcp-access-template-code"></code></pre>
+            <div class="flex gap8 mt16 wrap mcp-access-actions"><button id="mcp-access-copy-template" class="btn btn-primary btn-sm primary-button" type="button">复制占位符模板</button><button id="mcp-access-copy-summary" class="btn btn-ghost btn-sm secondary-button" type="button">复制安全摘要</button><a id="mcp-access-template-download" class="btn btn-ghost btn-sm text-link" href="/mcp-templates/opencode.json">打开模板文件</a></div>
+          </div>
+        </section>
+
+        <section class="mcp-section reveal d3" aria-label="如何使用">
+          <div class="section-title"><h2>如何使用 · whoami / 烟测</h2></div>
+          <div class="grid2">
+            <section id="mcp-access-smoke" class="panel mcp-access-smoke-panel"><div class="panel-head"><div><h3>连接验证</h3></div><a id="mcp-access-spawn-template" class="text-link more" href="/mcp-templates/agent-spawn.example.json">spawn 示例</a></div><ol class="mcp-step-list list"><li>客户端连接 Remote MCP 后先调用 <code>agentx_whoami({})</code>。</li><li>确认 key id/fingerprint、allowedModels、resources 和 <code>cwdExposed=false</code>。</li><li>从 <code>permissions.resources[].id</code> 选择资源作为 <code>chipId</code>。</li><li>不要传 <code>cwd</code>、<code>env</code>、自定义 systemPrompt 或完整 key。</li></ol><div id="mcp-access-downloads" class="mcp-access-download-list mt16"></div></section>
+          </div>
+        </section>
+
+        <section class="mcp-section reveal d4" aria-label="账号授权摘要">
+          <div class="panel mcp-access-account-cta"><div><h3>Key 与授权管理</h3><p class="muted small mt8">在用户中心创建 Key、查看授权模型与可用资源。</p></div><a class="btn btn-primary primary-button" href="/account#keys">进入用户中心 · 我的 MCP</a></div>
+          <div class="grid2 mt16"><section class="panel mcp-access-keys-panel"><div class="panel-head"><div><h2>我的 Key 摘要</h2></div><a class="text-link more" href="/account">去账户页管理 Key</a></div><div id="mcp-access-key-list" class="mcp-access-key-list" aria-live="polite"></div></section><section class="panel mcp-access-permissions-panel"><h2>授权范围</h2><div class="account-readonly-grid"><div><h3>模型</h3><div id="mcp-access-model-list" class="account-pill-list"></div></div><div><h3>资源</h3><div id="mcp-access-resource-list" class="account-pill-list"></div></div><div><h3>自助策略</h3><dl id="mcp-access-policy-list" class="account-policy-list"></dl></div></div></section></div>
+        </section>
+
+        <footer class="landing-footer portal-footer"><span data-product-signature>Powered by AgentX · Remote MCP over Streamable HTTP</span><span class="fingerprint-summary" data-product-fingerprint hidden></span><div data-product-changelog></div></footer>
+      </main>
+    </div>
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script><script src="/mcp-access.js?v=2.2.45"></script><script src="/assets/agentx-webui.js?v=2.2.43"></script>
+  </body>
+</html>

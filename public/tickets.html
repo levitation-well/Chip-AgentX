@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 工单系统</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page ticket-page portal-workspace-page reference-page" data-shell="marketing" data-active="tickets">
+    <div class="page landing-shell portal-workspace-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页"><span class="brand-mark logo">AX</span><span data-product-name>AgentX</span></a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+      <main class="portal-workspace-main reference-main">
+        <section class="workspace-title-block reveal d1"><h1>工单系统</h1><p class="muted small mt8">输入工单编号查询进度，登录后可查看与你关联的工单。</p></section>
+
+        <section id="ticket-system-layout" class="grid2 ticket-system-layout portal-workspace-section reference-section" aria-label="工单系统工作区">
+          <section id="ticket-query" class="panel ticket-query-card reveal d1" aria-label="公开工单查询">
+            <div class="panel-head"><div><h2>按工单编号查询</h2><p class="sub">公开查询</p></div></div>
+            <form id="ticket-query-form" class="flex gap8 wrap inline-form" style="align-items:flex-end"><label class="field grow" for="ticket-no-input"><span>工单编号</span><input id="ticket-no-input" class="input" name="ticketNo" type="text" inputmode="latin" autocomplete="off" placeholder="FB-20260525-0001" required></label><button class="btn btn-primary primary-button" type="submit">查询</button></form>
+            <p id="ticket-query-error" class="error-line" role="alert"></p><div id="ticket-query-result" class="ticket-result reference-ticket-result" aria-live="polite"></div>
+          </section>
+
+          <aside id="ticket-system-side" class="ticket-system-side panel reveal d2">
+            <button id="ticket-sidebar-toggle" class="sidebar-collapse-button ticket-sidebar-toggle" type="button" aria-controls="ticket-system-side" aria-expanded="true" title="折叠我的工单">-</button>
+            <section id="my-tickets" aria-label="登录态我的工单"><div class="panel-head"><div><h2>我的工单</h2><p class="sub">登录后可见</p></div><a class="more text-link" href="/feedback">提交反馈</a></div><div id="my-tickets-panel"><p id="my-tickets-status" class="status-line">登录后显示与你关联的工单。</p><div id="my-tickets-list" class="my-ticket-list list" aria-live="polite"></div></div></section>
+          </aside>
+        </section>
+      </main>
+      <footer class="landing-footer portal-footer"><span data-product-signature>Powered by AgentX</span><span class="fingerprint-summary" data-product-fingerprint hidden></span><div data-product-changelog></div></footer>
+    </div>
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script><script src="/assets/agentx-webui.js?v=2.2.43"></script><script src="/tickets.js?v=2.2.43"></script>
+  </body>
+</html>

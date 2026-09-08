@@ -1,0 +1,9 @@
+{
+  "baseDir": "prompts",
+  "files": {
+    "global": "global.md",
+    "roles": "roles",
+    "chips": "chips"
+  },
+  "defaultRole": "customer"
+}

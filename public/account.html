@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 用户中心</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page portal-page portal-workspace-page">
+    <div class="app-shell account-shell portal-shell">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页">
+          <span class="brand-mark logo" aria-hidden="true">AX</span>
+          <span data-product-name>AgentX</span>
+        </a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航">
+          <span data-portal-nav></span>
+          <span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span>
+        </nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+
+      <div class="account-workbench" data-account-workbench>
+        <aside class="account-sidenav" aria-label="账户控制台导航" data-i18n-aria-label="account.nav.aria">
+          <div class="account-sidenav-head">
+            <span class="account-sidenav-kicker" data-i18n="account.nav.console">用户中心</span>
+          </div>
+          <div class="account-sidenav-group-label">工作区</div>
+          <div class="account-sidenav-tabs" role="tablist" aria-label="账户工作区" data-i18n-aria-label="account.nav.workspaceAria">
+            <button id="account-nav-overview" class="account-sidenav-link active" type="button" role="tab" aria-selected="true" aria-controls="account-view-overview" data-account-view="overview">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5v-5h4v5"/></svg></span>
+              <span class="account-sidenav-text">概览</span>
+            </button>
+            <button id="account-nav-access" class="account-sidenav-link" type="button" role="tab" aria-selected="false" aria-controls="account-view-access" data-account-view="access">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="3.6"/><path d="M10.8 12.2 19.5 3.5"/><path d="M15.5 7 18 9.5"/><path d="M13 9.5 15.5 12"/></svg></span>
+              <span class="account-sidenav-text">访问与 MCP</span>
+            </button>
+            <button id="account-nav-credits" class="account-sidenav-link" type="button" role="tab" aria-selected="false" aria-controls="account-view-credits" data-account-view="credits">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h4"/></svg></span>
+              <span class="account-sidenav-text" data-i18n="account.nav.credits">积分</span>
+            </button>
+          </div>
+          <div class="account-sidenav-group-label">账户</div>
+          <div class="account-sidenav-tabs" role="tablist" aria-label="账户设置" data-i18n-aria-label="account.nav.settingsAria">
+            <button id="account-nav-profile" class="account-sidenav-link" type="button" role="tab" aria-selected="false" aria-controls="account-view-profile" data-account-view="profile">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.8-3.4 3.4-5 6.5-5s5.7 1.6 6.5 5"/></svg></span>
+              <span class="account-sidenav-text">Profile</span>
+            </button>
+            <button id="account-nav-security" class="account-sidenav-link" type="button" role="tab" aria-selected="false" aria-controls="account-view-security" data-account-view="security">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.4-3 7.5-7 8.8-4-1.3-7-4.4-7-8.8V5.8L12 3z"/></svg></span>
+              <span class="account-sidenav-text">安全</span>
+            </button>
+            <button id="account-nav-preferences" class="account-sidenav-link" type="button" role="tab" aria-selected="false" aria-controls="account-view-preferences" data-account-view="preferences">
+              <span class="account-sidenav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c-5 5-5 12 0 17"/><path d="M12 3.5c5 5 5 12 0 17"/></svg></span>
+              <span class="account-sidenav-text">语言与偏好</span>
+            </button>
+          </div>
+          <div class="account-sidenav-help">
+            <strong>需要帮助？</strong>
+            <a href="/mcp-access">查看 MCP 接入指南</a>
+            <span>或</span>
+            <a href="/tickets">提交工单</a>
+          </div>
+        </aside>
+
+        <main class="account-main" aria-label="用户中心">
+          <section class="account-pagehead">
+            <div>
+              <span class="account-pagehead-kicker">Account · Access · Usage</span>
+              <h1>用户中心</h1>
+              <p id="account-user-status" class="muted-line" aria-live="polite"></p>
+            </div>
+            <div class="account-pagehead-actions">
+              <div id="account-status" class="account-status status-badge" aria-live="polite"></div>
+              <button id="account-refresh" class="secondary-button" type="button">刷新状态</button>
+            </div>
+          </section>
+
+          <section id="account-view-overview" class="account-view-panel" role="tabpanel" aria-labelledby="account-nav-overview" data-account-view-panel="overview">
+            <div class="account-overview-grid">
+              <article class="panel account-overview-card account-overview-hero">
+                <div class="account-card-heading">
+                  <span>01</span>
+                  <h2 tabindex="-1">账户概览</h2>
+                  <span id="account-overview-sync" class="status-badge success">正在同步</span>
+                </div>
+                <div class="account-overview-hero-body">
+                  <div class="account-overview-status">
+                    <span id="account-availability" class="status-badge">正在同步</span>
+                    <strong id="account-username">-</strong>
+                    <span id="account-role">-</span>
+                  </div>
+                  <div class="account-overview-metrics">
+                    <div><strong id="account-overview-mode-count">0</strong><span>可用模式</span></div>
+                    <div><strong id="account-key-count">0</strong><span>有效 Keys</span></div>
+                    <div><strong id="account-credit-balance">-</strong><span data-i18n="account.nav.credits">积分</span></div>
+                  </div>
+                  <div class="account-card-actions">
+                    <a class="primary-button" href="/chat">进入对话</a>
+                    <a class="secondary-button" href="/mcp-access">MCP 接入</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="panel account-overview-card account-overview-access">
+                <div class="account-card-heading">
+                  <span>02</span>
+                  <h2>访问能力</h2>
+                  <button type="button" data-account-open-view="access">查看完整权限</button>
+                </div>
+                <div id="account-overview-mode-list" class="account-pill-list"></div>
+                <div id="account-overview-resource-summary" class="account-overview-summary"></div>
+                <div id="account-overview-policy-summary" class="account-pill-list"></div>
+              </article>
+
+              <article class="panel account-overview-card account-overview-keys">
+                <div class="account-card-heading">
+                  <span>03</span>
+                  <h2>MCP Keys</h2>
+                  <button type="button" data-account-open-view="access">管理 Keys</button>
+                </div>
+                <div id="account-overview-key-preview" class="account-key-preview"></div>
+              </article>
+
+              <article class="panel account-overview-card account-overview-credits">
+                <div class="account-card-heading">
+                  <span>04</span>
+                  <h2 data-i18n="account.credits.usage">积分使用</h2>
+                  <button type="button" data-account-open-view="credits">查看账单明细</button>
+                </div>
+                <div class="account-overview-credit-balance">
+                  <strong id="account-overview-credit-balance">-</strong>
+                  <span>当前余额</span>
+                </div>
+                <div id="account-overview-credit-recent" class="account-credit-recent"></div>
+              </article>
+
+              <article class="panel account-overview-card account-overview-placeholder" aria-label="更多自助能力，规划中">
+                <div class="account-card-heading">
+                  <span>05</span>
+                  <h2>更多自助能力</h2>
+                  <span class="status-badge">规划中</span>
+                </div>
+                <div class="account-planning-placeholder">
+                  <strong>更多能力正在规划</strong>
+                  <p>后续将在此提供账户配置建议和常用操作入口。</p>
+                </div>
+              </article>
+
+              <article class="panel account-overview-card account-overview-settings">
+                <div class="account-card-heading">
+                  <span>06</span>
+                  <h2>账户设置</h2>
+                </div>
+                <div class="account-settings-grid">
+                  <button type="button" data-account-open-view="profile"><strong>Profile</strong><span>姓名、公司与关注方向</span></button>
+                  <button type="button" data-account-open-view="security"><strong>安全</strong><span>修改密码与账户保护</span></button>
+                  <button type="button" data-account-open-view="preferences"><strong>语言与偏好</strong><span>界面语言与共享门户皮肤</span></button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="account-view-access" class="account-view-panel" role="tabpanel" aria-labelledby="account-nav-access" data-account-view-panel="access" hidden>
+            <h2 tabindex="-1">访问与 MCP</h2>
+            <div class="account-access-grid">
+              <article class="panel"><h3>可用模式</h3><div id="account-mode-list" class="account-mode-list"></div></article>
+              <article class="panel"><h3>自助策略</h3><dl id="account-policy-list" class="account-policy-list"></dl></article>
+            </div>
+            <article id="account-resource-catalog" class="panel account-resource-catalog" tabindex="-1" aria-labelledby="account-resource-title">
+              <div class="account-resource-heading">
+                <div>
+                  <span class="account-section-kicker">Effective resources</span>
+                  <h3 id="account-resource-title">生效资源目录</h3>
+                  <p>账户级唯一完整目录；MCP Key 仅展示继承或独立限制关系。</p>
+                </div>
+                <button id="account-resource-toggle" class="secondary-button" type="button" aria-expanded="true" aria-controls="account-resource-body">收起目录</button>
+              </div>
+              <div class="account-resource-stats" aria-label="资源类型筛选">
+                <button class="active" type="button" data-resource-filter="all" aria-pressed="true"><strong id="account-resource-count-all">0</strong><span>全部</span></button>
+                <button type="button" data-resource-filter="chip" aria-pressed="false"><strong id="account-resource-count-chip">0</strong><span>芯片</span></button>
+                <button type="button" data-resource-filter="document" aria-pressed="false"><strong id="account-resource-count-document">0</strong><span>文档</span></button>
+                <button type="button" data-resource-filter="scopePreset" aria-pressed="false"><strong id="account-resource-count-scope">0</strong><span>Scope</span></button>
+                <button type="button" data-resource-filter="other" aria-pressed="false"><strong id="account-resource-count-other">0</strong><span>其他</span></button>
+              </div>
+              <div id="account-resource-body" class="account-resource-body">
+                <label class="account-resource-search" for="account-resource-search">
+                  <span>搜索资源</span>
+                  <input id="account-resource-search" type="search" autocomplete="off" placeholder="输入名称、ID 或类型，例如 E522.95">
+                </label>
+                <div id="account-resource-list" class="account-resource-groups" aria-live="polite"></div>
+              </div>
+            </article>
+            <article class="panel account-keys-panel">
+              <div class="section-heading">
+                <h3>MCP Keys</h3>
+                <span id="account-key-policy-note" class="muted-line"></span>
+              </div>
+              <div id="account-secret-panel" class="account-secret-panel" hidden>
+                <div><strong>一次性 Secret</strong><p>只在本次创建或重生成后显示。刷新或重新加载后不会再次出现。</p></div>
+                <code id="account-secret-value"></code>
+                <div class="account-secret-actions">
+                  <button id="account-copy-secret" class="secondary-button" type="button">复制</button>
+                  <button id="account-clear-secret" type="button">清除</button>
+                </div>
+              </div>
+              <form id="account-key-form" class="account-key-form">
+                <label for="account-key-name">Key 名称<input id="account-key-name" name="name" autocomplete="off"></label>
+                <label for="account-key-expires">过期日期<input id="account-key-expires" name="expiresAt" type="date"></label>
+                <button id="account-create-key" class="primary-button" type="submit">创建 Key</button>
+              </form>
+              <div id="account-key-error" class="error-line" role="alert"></div>
+              <div id="account-key-list" class="account-key-list" aria-live="polite"></div>
+            </article>
+          </section>
+
+          <section id="account-view-credits" class="account-view-panel" role="tabpanel" aria-labelledby="account-nav-credits" data-account-view-panel="credits" hidden>
+            <h2 tabindex="-1" data-i18n="account.nav.credits">积分</h2>
+            <article class="panel">
+              <div class="account-overview-metrics account-credit-detail-summary" aria-label="积分摘要">
+                <div><strong id="account-credits-detail-balance">-</strong><span>当前余额</span></div>
+                <div><strong id="account-credits-detail-total">0</strong><span>账本记录</span></div>
+              </div>
+              <div id="account-credits-list" class="account-credits-list" aria-live="polite"></div>
+            </article>
+          </section>
+
+          <section id="account-view-profile" class="account-view-panel account-form-cols" role="tabpanel" aria-labelledby="account-nav-profile" data-account-view-panel="profile" hidden>
+            <h2 tabindex="-1">Profile</h2>
+            <article class="panel">
+              <form id="account-profile-form" class="account-form">
+                <h3 class="account-form-group-title">基本信息</h3>
+                <label for="profile-real-name">姓名<input id="profile-real-name" name="realName" autocomplete="name"></label>
+                <label for="profile-company">公司<input id="profile-company" name="company" autocomplete="organization"></label>
+                <label for="profile-job-title">岗位<input id="profile-job-title" name="jobTitle" autocomplete="organization-title"></label>
+                <label for="profile-email">邮箱<input id="profile-email" name="email" type="email" autocomplete="email"></label>
+                <label for="profile-contact">联系方式<input id="profile-contact" name="contact" autocomplete="tel"></label>
+                <label for="profile-usage-purpose">使用目的<textarea id="profile-usage-purpose" name="usagePurpose" rows="2"></textarea></label>
+                <h3 class="account-form-group-title">关注方向</h3>
+                <label class="account-form-span" for="profile-focus-brands">关注品牌<textarea id="profile-focus-brands" name="focusBrands" rows="2" placeholder="用逗号或换行分隔" data-i18n-placeholder="account.profile.splitPlaceholder"></textarea></label>
+                <label for="profile-focus-product-lines">关注产品线<textarea id="profile-focus-product-lines" name="focusProductLines" rows="2" placeholder="用逗号或换行分隔" data-i18n-placeholder="account.profile.splitPlaceholder"></textarea></label>
+                <label for="profile-focus-chip-directions">关注芯片方向<textarea id="profile-focus-chip-directions" name="focusChipDirections" rows="2" placeholder="用逗号或换行分隔" data-i18n-placeholder="account.profile.splitPlaceholder"></textarea></label>
+                <div class="account-form-actions">
+                  <button class="primary-button" type="submit">保存资料</button>
+                  <span id="account-profile-result" class="muted-line" aria-live="polite"></span>
+                </div>
+              </form>
+            </article>
+          </section>
+
+          <section id="account-view-security" class="account-view-panel" role="tabpanel" aria-labelledby="account-nav-security" data-account-view-panel="security" hidden>
+            <h2 tabindex="-1">安全</h2>
+            <article class="panel">
+              <h3>修改密码</h3>
+              <form id="account-password-form" class="account-form compact-account-form">
+                <label for="account-current-password">当前密码<input id="account-current-password" name="currentPassword" type="password" autocomplete="current-password"></label>
+                <label for="account-new-password">新密码<input id="account-new-password" name="newPassword" type="password" autocomplete="new-password"></label>
+                <label for="account-confirm-password">确认新密码<input id="account-confirm-password" name="confirmPassword" type="password" autocomplete="new-password"></label>
+                <div class="account-form-actions">
+                  <button class="primary-button" type="submit">修改密码</button>
+                  <span id="account-password-result" class="muted-line" aria-live="polite"></span>
+                </div>
+              </form>
+            </article>
+          </section>
+
+          <section id="account-view-preferences" class="account-view-panel" role="tabpanel" aria-labelledby="account-nav-preferences" data-account-view-panel="preferences" hidden>
+            <h2 tabindex="-1">语言与偏好</h2>
+            <article class="panel account-preferences-panel">
+              <label class="account-locale-control" for="account-locale">
+                <span data-i18n="account.locale.label">界面语言</span>
+                <select id="account-locale" name="locale"><option value="zh-CN">中文</option><option value="en-US">English</option></select>
+              </label>
+              <div id="account-locale-result" class="muted-line" aria-live="polite"></div>
+              <p class="muted-line">页面皮肤由顶部共享皮肤选择器管理。</p>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="/auth.js?v=2.2.42"></script>
+    <script src="/ui-kit.js?v=2.2.43"></script>
+    <script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/account.js?v=2.2.44"></script>
+    <script src="/assets/agentx-webui.js?v=2.2.43"></script>
+  </body>
+</html>

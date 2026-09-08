@@ -1,0 +1,19 @@
+{
+  "knowledgeBaseRoot": "./knowledge-bases",
+  "chips": [
+    {
+      "id": "E521.39",
+      "label": "E521.39",
+      "description": "Example chip metadata without server paths.",
+      "queryHint": "Use this id for E521.39 datasheet questions.",
+      "brand": "ELMOS",
+      "brandAliases": ["ELMOS Semiconductor"],
+      "productLines": ["ELMOS Motor"],
+      "applicationTags": ["Motor control"],
+      "documentIds": ["doc-e52139-datasheet"],
+      "permissionTags": ["datasheet"],
+      "sourceLabels": ["E521.39 datasheet markdown"],
+      "workspaceDir": "E521.39"
+    }
+  ]
+}

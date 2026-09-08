@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 工程资料平台</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page portal-page portal-workspace-page">
+    <canvas class="portal-bgfx bgfx" data-agentx-bgfx aria-hidden="true"></canvas>
+    <div class="page landing-shell portal-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页">
+          <span class="brand-mark logo">AX</span>
+          <span data-product-name>AgentX</span>
+        </a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+      <main class="portal-main portal-workspace-main">
+        <section class="hero landing-hero portal-hero" aria-label="AgentX 工程资料平台">
+          <span class="kicker landing-kicker reveal d1">嵌入式 · 汽车电子 · 工程资料协作</span>
+          <h1 class="reveal d2">AgentX 工程<br>资料平台</h1>
+          <p class="lede landing-lede reveal d3">芯片资料查询、datasheet 知识库与驱动开发辅助——面向嵌入式与汽车电子工程师的资料协作平台。</p>
+          <div class="hero-actions landing-actions portal-hero-actions reveal d4" aria-label="主页快捷入口">
+            <a class="btn btn-primary btn-lg landing-button primary-button portal-action-primary" href="/chat">进入对话</a>
+            <a class="btn btn-ghost btn-lg landing-button portal-action-ghost" href="/join-application">申请加入</a>
+            <a class="btn btn-ghost btn-lg landing-button portal-action-ghost" href="/mcp-access">MCP 接入</a>
+          </div>
+        </section>
+
+        <section id="capabilities" class="landing-section portal-capabilities-section" aria-label="平台核心能力">
+          <div class="section-title landing-section-head portal-section-title">
+            <span class="kicker landing-kicker portal-section-kicker">核心能力</span>
+            <h2>核心能力一览</h2>
+            <span class="product-version badge gray" data-product-version></span>
+          </div>
+          <div class="portal-capability-grid portal-bento-grid bento">
+            <article class="portal-bento-card bento-card portal-bento-wide reveal d1">
+              <span class="capability-index idx">01</span>
+              <h3>MCP 接入</h3>
+              <p>将 AgentX 接入 opencode、Codex 或 Claude Code 等客户端，在编码环境中直接检索芯片资料。</p>
+              <div class="portal-chip-set"><span>opencode</span><span>Codex</span><span>Claude Code</span><span>Cursor</span><span>Continue</span><span>Cline</span></div>
+              <a class="text-link portal-inline-link more" href="/mcp-access">查看 MCP 接入</a>
+            </article>
+            <article class="portal-bento-card bento-card portal-bento-small reveal d2">
+              <span class="capability-index idx">02</span>
+              <h3>资料提交</h3>
+              <p>上传 datasheet、应用笔记等工程资料（支持 PDF 等格式），平台自动解析入库，转化为 AI 可检索的知识。</p>
+              <a class="text-link portal-inline-link more" href="/datasheet-submit">提交资料</a>
+            </article>
+            <article class="portal-bento-card bento-card portal-bento-half reveal d3">
+              <span class="capability-index idx">03</span>
+              <h3>芯片问答</h3>
+              <p>基于 datasheet 知识库，检索寄存器定义、引脚说明与时序参数，回答附带页码与出处。</p>
+              <div class="portal-step-list"><span><b>1</b> 问题澄清与寄存器定位</span><span><b>2</b> 带页码 / 寄存器的引用来源</span></div>
+            </article>
+            <article class="portal-bento-card bento-card portal-bento-half reveal d4">
+              <span class="capability-index idx">04</span>
+              <h3>驱动开发辅助</h3>
+              <p>从需求澄清到代码生成：读取寄存器手册、生成驱动框架、输出验证脚本。</p>
+              <div class="portal-chip-set"><span>需求澄清</span><span>寄存器阅读</span><span>代码生成</span><span>验证脚本</span><span>交付记录</span></div>
+            </article>
+            <article class="portal-bento-card bento-card portal-future-card portal-bento-full reveal d5">
+              <span class="capability-index idx">05</span>
+              <h3>未来频道：AUTOSAR / UDS / OTA</h3>
+              <p>AUTOSAR、UDS、OTA 等资料库正在规划中，欢迎提交你的需求。</p>
+              <a class="text-link portal-inline-link more" href="/feedback">提交需求</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="updates" class="landing-section announcements-home-section portal-updates-section" data-announcements-home aria-label="最新更新">
+          <div class="section-title landing-section-head portal-section-title"><h2>最新更新</h2><a class="text-link portal-inline-link more" href="/updates">查看全部</a></div>
+          <div class="announcements-list announcements-home-list portal-announcements-list" data-announcements-home-feed aria-live="polite"></div>
+        </section>
+      </main>
+      <footer class="landing-footer portal-footer"><span data-product-signature>Powered by AgentX</span><span class="fingerprint-summary" data-product-fingerprint hidden></span><a class="donation-footer-link" href="/donation-support" data-donation-float><span>支持平台运行</span><small data-donation-float-note>暂未开放</small></a><div data-product-changelog></div></footer>
+    </div>
+    <div data-announcement-modal></div>
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/announcements.js?v=2.2.42"></script>
+    <script src="/assets/agentx-webui.js?v=2.2.43"></script>
+    <script src="/assets/agentx-home-bgfx.js?v=2.1.1"></script>
+  </body>
+</html>

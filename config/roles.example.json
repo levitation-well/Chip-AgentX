@@ -1,0 +1,44 @@
+{
+  "_permissions": {
+    "users": {
+      "label": "用户管理",
+      "description": "创建/删除用户、生成/撤销KEY、授予芯片访问权限"
+    },
+    "roles": {
+      "label": "角色管理",
+      "description": "新增/编辑/删除角色定义和权限组合"
+    },
+    "prompts": {
+      "label": "提示词管理",
+      "description": "编辑提示词文件"
+    },
+    "chips": {
+      "label": "芯片映射",
+      "description": "编辑芯片目录映射配置"
+    }
+  },
+  "admin": {
+    "description": "Administrator with full access",
+    "permissions": ["users", "roles", "prompts", "chips"],
+    "access": {
+      "allowedChips": ["*"],
+      "injectionPolicy": "every_turn"
+    }
+  },
+  "internal": {
+    "description": "Internal employee with limited permissions",
+    "permissions": [],
+    "access": {
+      "allowedChips": ["*"],
+      "injectionPolicy": "every_turn"
+    }
+  },
+  "customer": {
+    "description": "External customer with no admin permissions",
+    "permissions": [],
+    "access": {
+      "allowedChips": [],
+      "injectionPolicy": "first_turn"
+    }
+  }
+}

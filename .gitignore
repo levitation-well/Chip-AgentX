@@ -1,0 +1,12 @@
+.worktrees/
+node_modules/
+.env
+data/
+dist/
+coverage/
+test-results/
+*.log
+output/
+AgentX-*.zip
+node_modules/.vite/
+.playwright-cli/

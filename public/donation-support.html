@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentX · 捐赠支持</title>
+    <link rel="stylesheet" href="/styles.css?v=2.2.45">
+    <link rel="stylesheet" href="/assets/agentx-webui.css?v=2.2.43">
+    <script>(()=>{let l='zh-CN';try{const u=JSON.parse(localStorage.getItem('agentx.auth.user')||'null');const a=u&&(u.localePreference||u.preferredLanguage);const s=localStorage.getItem('agentx.locale.preference');const e=localStorage.getItem('agentx.locale.explicit')==='1';l=a==='en-US'||a==='zh-CN'?a:e&&(s==='en-US'||s==='zh-CN')?s:/^en/i.test(navigator.language||'')?'en-US':'zh-CN';}catch{}document.documentElement.lang=l;document.documentElement.dataset.agentxLocale=l;})();</script>
+    <script src="/i18n.js?v=2.2.44"></script><script src="/assets/i18n-portal.js?v=2.2.44"></script><script src="/assets/i18n-mcp-tickets.js?v=2.2.45"></script>
+    <script>(()=>{let skin='cal';try{const saved=localStorage.getItem('agentx.webui.skin');if(saved==='cal'||saved==='voltagent')skin=saved;}catch{}document.documentElement.dataset.agentxSkin=skin;})();</script>
+      <link rel="icon" href="data:,">
+  </head>
+  <body class="landing-page ticket-page donation-page portal-workspace-page" data-shell="marketing">
+    <div class="page landing-shell shell-mk">
+      <header class="landing-topbar portal-topbar float-nav" aria-label="AgentX 资料平台导航">
+        <a class="landing-brand brand" href="/home" aria-label="返回 AgentX 首页">
+          <span class="brand-mark logo">AX</span>
+          <span data-product-name>AgentX</span>
+        </a>
+        <nav class="landing-nav portal-nav" aria-label="AgentX 资料平台导航"><span data-portal-nav></span><span class="portal-auth-slot" data-portal-auth><a href="/login">登录</a></span></nav>
+        <div class="portal-skin-slot" data-agentx-skin-root></div>
+      </header>
+
+      <main class="portal-workspace-main narrow-workspace">
+        <section class="workspace-title-block reveal d1">
+          <h1>支持平台运行</h1>
+          <p class="muted small mt8">
+            你的支持将用于服务器、存储与日常运维。
+          </p>
+        </section>
+
+        <section
+          id="donation-support"
+          class="panel ticket-query-card donation-card donation-panel reveal d1"
+          aria-label="捐赠支持"
+          data-donation-root
+        >
+          <div class="panel-head">
+            <div>
+              <h2>选择支持金额</h2>
+            </div>
+            <span class="badge gray" data-donation-status>暂未开放</span>
+          </div>
+
+          <p class="donation-purpose">
+            所有支持将直接用于平台的服务器、存储和内容维护。
+          </p>
+
+          <fieldset class="donation-amounts choice-grid" aria-label="捐赠金额">
+            <legend>金额</legend>
+            <label class="choice">
+              <input type="radio" name="donationAmount" value="5" checked>
+              <span>5 元</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="donationAmount" value="10">
+              <span>10 元</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="donationAmount" value="30">
+              <span>30 元</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="donationAmount" value="50">
+              <span>50 元</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="donationAmount" value="100">
+              <span>100 元</span>
+            </label>
+            <label class="choice donation-custom-amount">
+              <input type="radio" name="donationAmount" value="custom" aria-label="自定义金额">
+              <span>自定义</span>
+              <input
+                data-donation-custom-amount
+                class="input"
+                type="number"
+                min="1"
+                step="1"
+                inputmode="decimal"
+                placeholder="金额"
+                aria-label="自定义捐赠金额"
+              >
+            </label>
+          </fieldset>
+
+          <p class="status-line donation-selected-amount" data-donation-selected-amount>当前选择：5 元</p>
+
+          <div class="donation-channel-grid grid2">
+            <article class="donation-channel panel" data-donation-channel="alipay">
+              <h3>支付宝</h3>
+              <div class="donation-qr" data-donation-qr="alipay"></div>
+              <a
+                class="secondary-button donation-link btn btn-ghost"
+                data-donation-link="alipay"
+                hidden
+                target="_blank"
+                rel="noopener noreferrer"
+              >打开支付宝链接</a>
+              <p class="donation-unavailable" data-donation-unavailable="alipay">暂未开放</p>
+            </article>
+
+            <article class="donation-channel panel" data-donation-channel="wechat">
+              <h3>微信</h3>
+              <div class="donation-qr" data-donation-qr="wechat"></div>
+              <a
+                class="secondary-button donation-link btn btn-ghost"
+                data-donation-link="wechat"
+                hidden
+                target="_blank"
+                rel="noopener noreferrer"
+              >打开微信链接</a>
+              <p class="donation-unavailable" data-donation-unavailable="wechat">暂未开放</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="landing-footer portal-footer">
+        <span data-product-signature>Powered by AgentX</span>
+        <span class="fingerprint-summary" data-product-fingerprint hidden></span>
+        <div data-product-changelog></div>
+      </footer>
+    </div>
+
+    <script src="/auth.js?v=2.2.42"></script><script src="/ui-kit.js?v=2.2.43"></script><script src="/product-shell.js?v=2.2.42"></script>
+    <script src="/assets/agentx-webui.js?v=2.2.43"></script>
+  </body>
+</html>

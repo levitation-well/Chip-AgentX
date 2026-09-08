@@ -1,0 +1,6 @@
+{
+  "_deprecated": "Legacy chip access is migrated into users.json resourceGrants.chipIds in AgentX 2.2.23. Keep this file only as an input for the one-time migration.",
+  "users": {
+    "USER_ID_HERE": ["CHIP_ID_1", "CHIP_ID_2"]
+  }
+}

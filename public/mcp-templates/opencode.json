@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "$comment": "Prefer agent_spawn.chatMode from agentx_whoami.searchModes. agent_spawn.model is compatibility-only and still follows the same chatMode contract; Remote MCP rejects chatMode=multimodal because this entry point has no image input.",
+  "mcp": {
+    "agentx-remote": {
+      "type": "remote",
+      "url": "https://mcp.example.com/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:AGENTX_MCP_KEY}"
+      }
+    }
+  }
+}
