@@ -106,9 +106,9 @@ npm run typecheck # TypeScript strict-mode check
 
 ### License
 
-This project is licensed under the **PolyForm Noncommercial License 1.0.0**. It is free for non-commercial use only. Commercial use — including use inside any company or for-profit organization — requires a separate commercial license.
+This project is licensed under the **PolyForm Noncommercial License 1.0.0**.
 
-To discuss a commercial license, contact the author at merlin_working@outlook.com or open an issue in this repository.
+contact the author at merlin_working@outlook.com or open an issue in this repository.
 
 See [LICENSE](./LICENSE) for the full legal text.
 
@@ -214,8 +214,8 @@ npm run typecheck # TypeScript 严格模式检查
 
 ### 许可证
 
-本项目采用 **PolyForm Noncommercial License 1.0.0**，仅允许非商业使用。商业使用（包括在任何公司或营利组织场景中使用）需另行洽谈商业授权。
+本项目采用 **PolyForm Noncommercial License 1.0.0**
 
-如需商业授权，请联系作者：merlin_working@outlook.com，或在本仓库提交 Issue。
+作者：merlin_working@outlook.com，或在本仓库提交 Issue。
 
 完整法律文本见 [LICENSE](./LICENSE)。
